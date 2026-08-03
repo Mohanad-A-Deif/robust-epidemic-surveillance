@@ -1,0 +1,113 @@
+scenario,method,average_rank,rank_std
+delay_light,No-delay ablation,1.45,0.7591546545162483
+delay_light,Proposed revised,2.05,0.39403446282620613
+delay_light,Robust median smoother,3.1,1.713721711732438
+delay_light,No-robustness ablation,4.05,0.6863327411532596
+delay_light,Kalman/RTS smoother (internal),4.95,0.8870412083230168
+delay_light,Delay-aware state-space (internal),5.4,0.5982430416161189
+delay_light,Delay backprojection,7.0,0.0
+delay_light,Arrival interpolation,8.0,0.0
+delay_moderate,No-delay ablation,1.25,0.4442616583193193
+delay_moderate,Proposed revised,2.0,0.5619514869490163
+delay_moderate,Robust median smoother,3.8,1.6415653633362466
+delay_moderate,No-robustness ablation,4.35,1.1821033884786183
+delay_moderate,Kalman/RTS smoother (internal),4.65,1.089422831256605
+delay_moderate,Delay-aware state-space (internal),5.0,0.7947194142390263
+delay_moderate,Delay backprojection,6.95,0.22360679774997894
+delay_moderate,Arrival interpolation,8.0,0.0
+delay_severe,No-delay ablation,1.45,0.6863327411532598
+delay_severe,Proposed revised,1.9,0.5525062514530825
+delay_severe,Robust median smoother,4.1,1.9708400559953587
+delay_severe,Delay-aware state-space (internal),4.3,0.9233805168766387
+delay_severe,Kalman/RTS smoother (internal),4.7,1.0310954828418375
+delay_severe,No-robustness ablation,4.7,1.2607433062326867
+delay_severe,Delay backprojection,6.85,0.3663475485325232
+delay_severe,Arrival interpolation,8.0,0.0
+missing_00,No-delay ablation,1.4,0.6805570473787206
+missing_00,Proposed revised,2.0,0.45883146774112354
+missing_00,Robust median smoother,3.25,1.6181535936466533
+missing_00,No-robustness ablation,4.55,0.998683343734455
+missing_00,Kalman/RTS smoother (internal),4.85,1.0894228312566052
+missing_00,Delay-aware state-space (internal),5.0,0.8583950752789521
+missing_00,Delay backprojection,6.95,0.22360679774997894
+missing_00,Arrival interpolation,8.0,0.0
+missing_10,No-delay ablation,1.25,0.4442616583193193
+missing_10,Proposed revised,2.0,0.5619514869490163
+missing_10,Robust median smoother,3.8,1.6415653633362466
+missing_10,No-robustness ablation,4.35,1.1821033884786183
+missing_10,Kalman/RTS smoother (internal),4.65,1.089422831256605
+missing_10,Delay-aware state-space (internal),5.0,0.7947194142390263
+missing_10,Delay backprojection,6.95,0.22360679774997894
+missing_10,Arrival interpolation,8.0,0.0
+missing_30,No-delay ablation,1.4,0.5982430416161189
+missing_30,Proposed revised,1.85,0.5871429486123998
+missing_30,Robust median smoother,4.1,1.4473205733717955
+missing_30,No-robustness ablation,4.1,1.4104870379448817
+missing_30,Kalman/RTS smoother (internal),4.5,1.3178930553209385
+missing_30,Delay-aware state-space (internal),5.15,0.6708203932499369
+missing_30,Delay backprojection,7.1,0.4472135954999579
+missing_30,Arrival interpolation,7.8,0.41039134083406165
+missing_50,No-delay ablation,1.9,0.8522416262267903
+missing_50,Proposed revised,2.05,1.2763022245616642
+missing_50,Kalman/RTS smoother (internal),3.95,1.6693837501494848
+missing_50,No-robustness ablation,4.3,1.7198531149031608
+missing_50,Robust median smoother,4.5,2.039091645032686
+missing_50,Delay-aware state-space (internal),4.85,0.8127277008872492
+missing_50,Delay backprojection,6.8,0.6958523739384594
+missing_50,Arrival interpolation,7.65,0.9333020044867295
+outlier_00,Delay backprojection,1.0,0.0
+outlier_00,Delay-aware state-space (internal),2.0,0.0
+outlier_00,Kalman/RTS smoother (internal),3.0,0.0
+outlier_00,Robust median smoother,4.0,0.0
+outlier_00,Arrival interpolation,5.0,0.0
+outlier_00,No-delay ablation,6.0,0.0
+outlier_00,Proposed revised,7.025,0.11180339887498947
+outlier_00,No-robustness ablation,7.975,0.11180339887498947
+outlier_05,No-delay ablation,1.25,0.4442616583193193
+outlier_05,Proposed revised,2.0,0.5619514869490163
+outlier_05,Robust median smoother,3.8,1.6415653633362466
+outlier_05,No-robustness ablation,4.35,1.1821033884786183
+outlier_05,Kalman/RTS smoother (internal),4.65,1.089422831256605
+outlier_05,Delay-aware state-space (internal),5.0,0.7947194142390263
+outlier_05,Delay backprojection,6.95,0.22360679774997894
+outlier_05,Arrival interpolation,8.0,0.0
+outlier_10,No-delay ablation,1.25,0.4442616583193193
+outlier_10,Proposed revised,1.8,0.523148363780597
+outlier_10,Robust median smoother,3.9,1.4473205733717958
+outlier_10,No-robustness ablation,4.1,1.020835571068081
+outlier_10,Kalman/RTS smoother (internal),4.95,1.0990426455975697
+outlier_10,Delay-aware state-space (internal),5.1,0.6407232755171874
+outlier_10,Delay backprojection,6.9,0.30779350562554625
+outlier_10,Arrival interpolation,8.0,0.0
+outlier_20,No-delay ablation,1.15,0.36634754853252327
+outlier_20,Proposed revised,1.85,0.36634754853252327
+outlier_20,No-robustness ablation,3.7,0.9233805168766387
+outlier_20,Robust median smoother,4.6,1.3138933706635725
+outlier_20,Delay-aware state-space (internal),4.85,0.5871429486123998
+outlier_20,Kalman/RTS smoother (internal),4.85,1.1821033884786185
+outlier_20,Delay backprojection,7.0,0.0
+outlier_20,Arrival interpolation,8.0,0.0
+outlier_30,No-delay ablation,1.2,0.41039134083406165
+outlier_30,Proposed revised,1.8,0.41039134083406165
+outlier_30,No-robustness ablation,3.55,0.8870412083230169
+outlier_30,Kalman/RTS smoother (internal),4.6,1.0462967275611939
+outlier_30,Delay-aware state-space (internal),4.8,0.7677718959499146
+outlier_30,Robust median smoother,5.1,1.2523661815266247
+outlier_30,Delay backprojection,6.95,0.22360679774997894
+outlier_30,Arrival interpolation,8.0,0.0
+prior_mismatch,No-delay ablation,1.55,0.9445132413883326
+prior_mismatch,Proposed revised,1.7,0.5712405705774793
+prior_mismatch,No-robustness ablation,3.75,0.9665456669582609
+prior_mismatch,Robust median smoother,4.55,1.7006190823220508
+prior_mismatch,Kalman/RTS smoother (internal),4.6,0.99472291830968
+prior_mismatch,Delay-aware state-space (internal),4.9,0.8522416262267903
+prior_mismatch,Delay backprojection,6.95,0.22360679774997894
+prior_mismatch,Arrival interpolation,8.0,0.0
+reference_moderate,No-delay ablation,1.25,0.4442616583193193
+reference_moderate,Proposed revised,2.0,0.5619514869490163
+reference_moderate,Robust median smoother,3.8,1.6415653633362466
+reference_moderate,No-robustness ablation,4.35,1.1821033884786183
+reference_moderate,Kalman/RTS smoother (internal),4.65,1.089422831256605
+reference_moderate,Delay-aware state-space (internal),5.0,0.7947194142390263
+reference_moderate,Delay backprojection,6.95,0.22360679774997894
+reference_moderate,Arrival interpolation,8.0,0.0

@@ -1,0 +1,51 @@
+{
+  "dataset_name": "RKI_StopptCOVID_SemiReal_StateNetwork",
+  "source_file": "../../data/raw/IfSG_COVID-19_Erkrankungsbeginn_Erwartungswert.csv",
+  "source_md5_observed": "e59953809e7a8050bb40045c6172ee30",
+  "source_rows_total": 29712,
+  "source_rows_selected": 6570,
+  "source_age_groups_selected": [
+    "00-19",
+    "20-59",
+    "60+"
+  ],
+  "selected_states": [
+    "Baden-Württemberg",
+    "Bayern",
+    "Hessen",
+    "Niedersachsen",
+    "Nordrhein-Westfalen",
+    "Rheinland-Pfalz"
+  ],
+  "date_start": "2020-02-20",
+  "date_end": "2021-02-18",
+  "n_nodes": 6,
+  "n_time_points": 365,
+  "matrix_orientation_npz": "nodes_by_time",
+  "matrix_orientation_csv": "dates_by_states",
+  "missing_state_date_cells_before_policy": 0,
+  "split_counts": {
+    "train": 219,
+    "validation": 73,
+    "test": 73
+  },
+  "latent_state_definition": "log1p of daily symptom-onset expected-case incidence per 100,000 population",
+  "transform": "daily expected cases divided by a documented state population denominator, multiplied by 100,000, then log1p; optional per-state z-scoring is fitted on the training interval only",
+  "population_reference_date": "2020-12-31",
+  "population_source": "German Federal Statistical Office (Destatis), GENESIS-Online table 12411-0017; values used by the RKI repository population file",
+  "population_values": {
+    "Baden-Württemberg": 11103043,
+    "Bayern": 13140183,
+    "Hessen": 6293154,
+    "Niedersachsen": 8003421,
+    "Nordrhein-Westfalen": 17925570,
+    "Rheinland-Pfalz": 4098391
+  },
+  "real_data_component": "RKI symptom-onset expected epidemic trajectories",
+  "injected_components": [
+    "message missingness",
+    "reporting delay",
+    "outlier contamination"
+  ],
+  "reference_graph_note": "Geographic adjacency is a structural reference/soft prior, not a known directed ground-truth transmission graph."
+}

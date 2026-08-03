@@ -1,0 +1,125 @@
+\begin{table}[!htbp]
+\centering
+\caption{Average ranks computed with independent seeds as blocks within each scenario.}
+\label{tab:robustness_ranks}
+\resizebox{\linewidth}{!}{%
+\begin{tabular}{llrr}
+\toprule
+scenario & method & average_rank & rank_std \\
+\midrule
+delay_light & No-delay ablation & 1.45 & 0.75915 \\
+delay_light & Proposed revised & 2.05 & 0.39403 \\
+delay_light & Robust median smoother & 3.1 & 1.7137 \\
+delay_light & No-robustness ablation & 4.05 & 0.68633 \\
+delay_light & Kalman/RTS smoother (internal) & 4.95 & 0.88704 \\
+delay_light & Delay-aware state-space (internal) & 5.4 & 0.59824 \\
+delay_light & Delay backprojection & 7 & 0 \\
+delay_light & Arrival interpolation & 8 & 0 \\
+delay_moderate & No-delay ablation & 1.25 & 0.44426 \\
+delay_moderate & Proposed revised & 2 & 0.56195 \\
+delay_moderate & Robust median smoother & 3.8 & 1.6416 \\
+delay_moderate & No-robustness ablation & 4.35 & 1.1821 \\
+delay_moderate & Kalman/RTS smoother (internal) & 4.65 & 1.0894 \\
+delay_moderate & Delay-aware state-space (internal) & 5 & 0.79472 \\
+delay_moderate & Delay backprojection & 6.95 & 0.22361 \\
+delay_moderate & Arrival interpolation & 8 & 0 \\
+delay_severe & No-delay ablation & 1.45 & 0.68633 \\
+delay_severe & Proposed revised & 1.9 & 0.55251 \\
+delay_severe & Robust median smoother & 4.1 & 1.9708 \\
+delay_severe & Delay-aware state-space (internal) & 4.3 & 0.92338 \\
+delay_severe & Kalman/RTS smoother (internal) & 4.7 & 1.0311 \\
+delay_severe & No-robustness ablation & 4.7 & 1.2607 \\
+delay_severe & Delay backprojection & 6.85 & 0.36635 \\
+delay_severe & Arrival interpolation & 8 & 0 \\
+missing_00 & No-delay ablation & 1.4 & 0.68056 \\
+missing_00 & Proposed revised & 2 & 0.45883 \\
+missing_00 & Robust median smoother & 3.25 & 1.6182 \\
+missing_00 & No-robustness ablation & 4.55 & 0.99868 \\
+missing_00 & Kalman/RTS smoother (internal) & 4.85 & 1.0894 \\
+missing_00 & Delay-aware state-space (internal) & 5 & 0.8584 \\
+missing_00 & Delay backprojection & 6.95 & 0.22361 \\
+missing_00 & Arrival interpolation & 8 & 0 \\
+missing_10 & No-delay ablation & 1.25 & 0.44426 \\
+missing_10 & Proposed revised & 2 & 0.56195 \\
+missing_10 & Robust median smoother & 3.8 & 1.6416 \\
+missing_10 & No-robustness ablation & 4.35 & 1.1821 \\
+missing_10 & Kalman/RTS smoother (internal) & 4.65 & 1.0894 \\
+missing_10 & Delay-aware state-space (internal) & 5 & 0.79472 \\
+missing_10 & Delay backprojection & 6.95 & 0.22361 \\
+missing_10 & Arrival interpolation & 8 & 0 \\
+missing_30 & No-delay ablation & 1.4 & 0.59824 \\
+missing_30 & Proposed revised & 1.85 & 0.58714 \\
+missing_30 & Robust median smoother & 4.1 & 1.4473 \\
+missing_30 & No-robustness ablation & 4.1 & 1.4105 \\
+missing_30 & Kalman/RTS smoother (internal) & 4.5 & 1.3179 \\
+missing_30 & Delay-aware state-space (internal) & 5.15 & 0.67082 \\
+missing_30 & Delay backprojection & 7.1 & 0.44721 \\
+missing_30 & Arrival interpolation & 7.8 & 0.41039 \\
+missing_50 & No-delay ablation & 1.9 & 0.85224 \\
+missing_50 & Proposed revised & 2.05 & 1.2763 \\
+missing_50 & Kalman/RTS smoother (internal) & 3.95 & 1.6694 \\
+missing_50 & No-robustness ablation & 4.3 & 1.7199 \\
+missing_50 & Robust median smoother & 4.5 & 2.0391 \\
+missing_50 & Delay-aware state-space (internal) & 4.85 & 0.81273 \\
+missing_50 & Delay backprojection & 6.8 & 0.69585 \\
+missing_50 & Arrival interpolation & 7.65 & 0.9333 \\
+outlier_00 & Delay backprojection & 1 & 0 \\
+outlier_00 & Delay-aware state-space (internal) & 2 & 0 \\
+outlier_00 & Kalman/RTS smoother (internal) & 3 & 0 \\
+outlier_00 & Robust median smoother & 4 & 0 \\
+outlier_00 & Arrival interpolation & 5 & 0 \\
+outlier_00 & No-delay ablation & 6 & 0 \\
+outlier_00 & Proposed revised & 7.025 & 0.1118 \\
+outlier_00 & No-robustness ablation & 7.975 & 0.1118 \\
+outlier_05 & No-delay ablation & 1.25 & 0.44426 \\
+outlier_05 & Proposed revised & 2 & 0.56195 \\
+outlier_05 & Robust median smoother & 3.8 & 1.6416 \\
+outlier_05 & No-robustness ablation & 4.35 & 1.1821 \\
+outlier_05 & Kalman/RTS smoother (internal) & 4.65 & 1.0894 \\
+outlier_05 & Delay-aware state-space (internal) & 5 & 0.79472 \\
+outlier_05 & Delay backprojection & 6.95 & 0.22361 \\
+outlier_05 & Arrival interpolation & 8 & 0 \\
+outlier_10 & No-delay ablation & 1.25 & 0.44426 \\
+outlier_10 & Proposed revised & 1.8 & 0.52315 \\
+outlier_10 & Robust median smoother & 3.9 & 1.4473 \\
+outlier_10 & No-robustness ablation & 4.1 & 1.0208 \\
+outlier_10 & Kalman/RTS smoother (internal) & 4.95 & 1.099 \\
+outlier_10 & Delay-aware state-space (internal) & 5.1 & 0.64072 \\
+outlier_10 & Delay backprojection & 6.9 & 0.30779 \\
+outlier_10 & Arrival interpolation & 8 & 0 \\
+outlier_20 & No-delay ablation & 1.15 & 0.36635 \\
+outlier_20 & Proposed revised & 1.85 & 0.36635 \\
+outlier_20 & No-robustness ablation & 3.7 & 0.92338 \\
+outlier_20 & Robust median smoother & 4.6 & 1.3139 \\
+outlier_20 & Delay-aware state-space (internal) & 4.85 & 0.58714 \\
+outlier_20 & Kalman/RTS smoother (internal) & 4.85 & 1.1821 \\
+outlier_20 & Delay backprojection & 7 & 0 \\
+outlier_20 & Arrival interpolation & 8 & 0 \\
+outlier_30 & No-delay ablation & 1.2 & 0.41039 \\
+outlier_30 & Proposed revised & 1.8 & 0.41039 \\
+outlier_30 & No-robustness ablation & 3.55 & 0.88704 \\
+outlier_30 & Kalman/RTS smoother (internal) & 4.6 & 1.0463 \\
+outlier_30 & Delay-aware state-space (internal) & 4.8 & 0.76777 \\
+outlier_30 & Robust median smoother & 5.1 & 1.2524 \\
+outlier_30 & Delay backprojection & 6.95 & 0.22361 \\
+outlier_30 & Arrival interpolation & 8 & 0 \\
+prior_mismatch & No-delay ablation & 1.55 & 0.94451 \\
+prior_mismatch & Proposed revised & 1.7 & 0.57124 \\
+prior_mismatch & No-robustness ablation & 3.75 & 0.96655 \\
+prior_mismatch & Robust median smoother & 4.55 & 1.7006 \\
+prior_mismatch & Kalman/RTS smoother (internal) & 4.6 & 0.99472 \\
+prior_mismatch & Delay-aware state-space (internal) & 4.9 & 0.85224 \\
+prior_mismatch & Delay backprojection & 6.95 & 0.22361 \\
+prior_mismatch & Arrival interpolation & 8 & 0 \\
+reference_moderate & No-delay ablation & 1.25 & 0.44426 \\
+reference_moderate & Proposed revised & 2 & 0.56195 \\
+reference_moderate & Robust median smoother & 3.8 & 1.6416 \\
+reference_moderate & No-robustness ablation & 4.35 & 1.1821 \\
+reference_moderate & Kalman/RTS smoother (internal) & 4.65 & 1.0894 \\
+reference_moderate & Delay-aware state-space (internal) & 5 & 0.79472 \\
+reference_moderate & Delay backprojection & 6.95 & 0.22361 \\
+reference_moderate & Arrival interpolation & 8 & 0 \\
+\bottomrule
+\end{tabular}
+}
+\end{table}

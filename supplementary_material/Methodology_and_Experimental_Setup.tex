@@ -1,0 +1,387 @@
+\section{Methodology}
+\label{sec:methodology}
+
+\subsection{Notation and Problem Definition}
+\label{subsec:notation}
+Let $G=(\mathcal{V},\mathcal{E})$ denote a directed graph with node set $\mathcal{V}=\{1,\ldots,n\}$ representing geographic regions or reporting units. We denote by $W\in\mathbb{R}_{+}^{n\times n}$ the unknown nonnegative weighted adjacency matrix, where $W_{ij}>0$ represents a directed association from source node $j$ to receiving node $i$. Throughout this work, $W\geq 0$ denotes \emph{elementwise} nonnegativity, not positive semidefiniteness, and self-connections are excluded through $\operatorname{diag}(W)=0$.
+
+Let $X=[x_1,\ldots,x_T]\in\mathbb{R}_{+}^{n\times T}$ denote the latent epidemic trajectory, where $x_t\in\mathbb{R}_{+}^{n}$ is the state at time $t$. For the semi-real RKI experiments, the latent state is defined as the logarithmically transformed daily incidence per 100,000 population,
+\begin{equation}
+    x_{i,t}
+    =\log\!\left(1+10^{5}\frac{c_{i,t}}{N_i}\right),
+    \label{eq:latent_state_new}
+\end{equation}
+where $c_{i,t}$ is the clean state-level expected number of cases by symptom-onset date and $N_i$ is the documented population of region $i$. Thus, $x_{i,t}$ is neither prevalence nor a raw case count; it is a \texttt{log1p}-transformed incidence measure.
+
+\paragraph{Assumption 1 (Bounded reporting delay).}
+Each report generated at time $g$ is either received at time $a=g+\delta$, where $\delta\in\{0,\ldots,D\}$, or is dropped. The maximum delay $D$ is finite and scenario-specific.
+
+\paragraph{Assumption 2 (Observed arrival time and uncertain generation time).}
+For each received message, the arrival time and observed value are available, whereas the generation time is treated as latent unless an oracle timestamp is explicitly used as a reference bound. Several messages may arrive at the same node and time; such messages are retained as distinct records.
+
+\paragraph{Assumption 3 (Semi-real observation process).}
+The epidemic trajectories used in the RKI study are real, whereas missingness, reporting delay, and outliers are injected artificially. Accordingly, the injected communication impairments are not interpreted as delays, losses, or outliers measured by RKI.
+
+\subsection{Directed Latent Epidemic Dynamics}
+\label{subsec:directed_dynamics}
+We retain directionality in the state-transition model. Let
+\begin{equation}
+    D_r(W)=\operatorname{diag}(W\mathbf{1}),
+    \qquad
+    A(W)=(1-\gamma)I-\beta\{D_r(W)-W\},
+    \label{eq:transition_operator_new}
+\end{equation}
+where $\beta>0$ controls inter-node coupling and $\gamma\in(0,1)$ is an effective decay or removal coefficient. The latent state evolves according to
+\begin{equation}
+    x_{t+1}=A(W)x_t+w_t,
+    \qquad t=1,\ldots,T-1,
+    \label{eq:directed_state_dynamics_new}
+\end{equation}
+where $w_t$ captures process noise and unmodeled epidemic effects. Under an isotropic Gaussian process model, $w_t\sim\mathcal{N}(0,\sigma_w^2I)$, Eq.~\eqref{eq:directed_state_dynamics_new} induces the quadratic dynamic-consistency penalty
+\begin{equation}
+    \mathcal{R}_{\mathrm{dyn}}(X,W)
+    =\frac{1}{2\sigma_w^2}
+    \sum_{t=1}^{T-1}
+    \left\|x_{t+1}-A(W)x_t\right\|_2^2.
+    \label{eq:dynamic_penalty_new}
+\end{equation}
+
+\subsection{Valid Smoothness Regularization for a Directed Graph}
+\label{subsec:valid_smoothness}
+A quadratic form constructed directly from an asymmetric directed Laplacian is not guaranteed to be nonnegative. Therefore, direction is retained in the transition operator $A(W)$, while the smoothness term is constructed from the symmetric association matrix
+\begin{equation}
+    S(W)=\frac{W+W^{\top}}{2},
+    \qquad
+    L_s(W)=\operatorname{diag}(S(W)\mathbf{1})-S(W).
+    \label{eq:symmetric_laplacian_new}
+\end{equation}
+Because $S(W)$ is symmetric and elementwise nonnegative, $L_s(W)$ is positive semidefinite. The graph-smoothness penalty is therefore
+\begin{align}
+    \mathcal{R}_{\mathrm{smooth}}(X,W)
+    &=\operatorname{tr}\!\left(X^{\top}L_s(W)X\right) \nonumber\\
+    &=\frac{1}{2}\sum_{t=1}^{T}\sum_{i=1}^{n}\sum_{j=1}^{n}
+    S_{ij}(W)\left(x_{i,t}-x_{j,t}\right)^2
+    \geq 0.
+    \label{eq:valid_smoothness_new}
+\end{align}
+This term regularizes similarity between associated trajectories, but it does not by itself establish a directed transmission mechanism. Consequently, the graph learned from RKI data is interpreted as a learned association or propagation graph rather than a ground-truth transmission network.
+
+\subsection{Message-Level Observation Model}
+\label{subsec:message_observation}
+Let $m\in\{1,\ldots,M\}$ index received messages. Each message record contains the node $i_m$, arrival time $a_m$, observed value $y_m$, and slice or reporting class $s_m$. For a feasible delay
+\begin{equation}
+    d\in\mathcal{D}_m
+    =\{0,\ldots,\min(D,a_m-1)\},
+    \label{eq:feasible_delays_new}
+\end{equation}
+the candidate generation time is $g_m=a_m-d$, and the corresponding residual is
+\begin{equation}
+    r_{m,d}(X)=y_m-x_{i_m,a_m-d}.
+    \label{eq:message_residual_new}
+\end{equation}
+The observation error is handled by the Huber loss
+\begin{equation}
+    \rho_{\kappa}(u)=
+    \begin{cases}
+        \frac{1}{2}u^2, & |u|\leq\kappa,\\
+        \kappa\left(|u|-\frac{1}{2}\kappa\right), & |u|>\kappa,
+    \end{cases}
+    \label{eq:huber_loss_new}
+\end{equation}
+where $\kappa>0$ is selected using the validation interval. This loss preserves quadratic efficiency for small residuals while limiting the influence of injected outliers.
+
+\subsection{Tempered Delay Responsibilities and Temporal Consistency}
+\label{subsec:delay_responsibilities}
+Let $\pi_{s_m,d}$ denote the nominal delay probability for reporting class $s_m$. For fixed $X$, the posterior responsibility assigned to delay $d$ is
+\begin{equation}
+    q_{m,d}
+    =\frac{
+    \pi_{s_m,d}
+    \exp\!\left[
+        -\rho_{\kappa}(r_{m,d}(X))/\tau
+        -\eta\left(d-\bar d_{m^-}\right)^2
+    \right]
+    }{
+    \displaystyle
+    \sum_{d'\in\mathcal{D}_m}
+    \pi_{s_m,d'}
+    \exp\!\left[
+        -\rho_{\kappa}(r_{m,d'}(X))/\tau
+        -\eta\left(d'-\bar d_{m^-}\right)^2
+    \right]
+    },
+    \label{eq:tempered_delay_posterior_new}
+\end{equation}
+where $\tau>0$ is a posterior temperature and $\eta\geq0$ controls optional delay-transition consistency. The quantity $\bar d_{m^-}$ is the posterior expected delay of the preceding message in the same node stream, when available. Setting $\eta=0$ removes temporal delay consistency. Values of $\tau$ and $\eta$ are treated as model-selection parameters and are fixed before opening the test interval.
+
+Equation~\eqref{eq:tempered_delay_posterior_new} follows from the entropy-regularized variational term
+\begin{equation}
+    \sum_{d\in\mathcal{D}_m}q_{m,d}\rho_{\kappa}(r_{m,d}(X))
+    +\tau\operatorname{KL}(q_m\|\pi_{s_m})
+    +\eta\sum_{d\in\mathcal{D}_m}q_{m,d}
+    \left(d-\bar d_{m^-}\right)^2,
+    \label{eq:delay_variational_term_new}
+\end{equation}
+subject to $q_{m,d}\geq0$ and $\sum_{d\in\mathcal{D}_m}q_{m,d}=1$.
+
+\subsection{Soft Geographic Prior, Sparsity, and Adaptive Row Control}
+\label{subsec:graph_regularization}
+Let $G^{\mathrm{geo}}\in\{0,1\}^{n\times n}$ denote a geographic reference adjacency. Unlike a hard candidate mask, this reference does not prohibit non-geographic edges. Instead, it defines edge-specific sparsity costs
+\begin{equation}
+    c_{ij}=
+    \begin{cases}
+        \lambda_W\omega_{\mathrm{geo}}, & G^{\mathrm{geo}}_{ij}=1,\\
+        \lambda_W, & G^{\mathrm{geo}}_{ij}=0,
+    \end{cases}
+    \qquad 0<\omega_{\mathrm{geo}}\leq1,
+    \label{eq:soft_geo_weights_new}
+\end{equation}
+so geographically adjacent edges are encouraged through a lower penalty, while all off-diagonal edges remain admissible.
+
+To avoid forcing every row of $W$ toward the same arbitrary sum, we use an adaptive row-control term. Let $r_i(X)>0$ denote a row-specific soft target derived from the variability of the initialized trajectory at node $i$. The penalty is
+\begin{equation}
+    \mathcal{R}_{\mathrm{row}}(W;X)
+    =\lambda_r\sum_{i=1}^{n}
+    \left[(W\mathbf{1})_i-r_i(X)\right]_{+}^{2},
+    \label{eq:adaptive_row_penalty_new}
+\end{equation}
+where $[u]_+=\max(u,0)$. A broad row-sum projection is used only as a numerical stability guard for the transition operator; it is not used to impose identical connectivity on all nodes.
+
+\subsection{Joint Robust Objective}
+\label{subsec:joint_objective}
+The latent trajectory, directed graph, and delay responsibilities are estimated by minimizing
+\begin{align}
+    \mathcal{J}(X,W,Q)
+    ={}&
+    \sum_{m=1}^{M}\sum_{d\in\mathcal{D}_m}
+    q_{m,d}\rho_{\kappa}\!\left(y_m-x_{i_m,a_m-d}\right)
+    +\tau\sum_{m=1}^{M}\operatorname{KL}(q_m\|\pi_{s_m})
+    \nonumber\\
+    &+\eta\sum_{m=1}^{M}\sum_{d\in\mathcal{D}_m}
+    q_{m,d}\left(d-\bar d_{m^-}\right)^2
+    +\mathcal{R}_{\mathrm{dyn}}(X,W)
+    \nonumber\\
+    &+\lambda_G\operatorname{tr}\!\left(X^{\top}L_s(W)X\right)
+    +\sum_{i\neq j}c_{ij}W_{ij}
+    +\mathcal{R}_{\mathrm{row}}(W;X),
+    \label{eq:joint_objective_new}
+\end{align}
+subject to
+\begin{equation}
+    X\geq0,\qquad W\geq0,\qquad \operatorname{diag}(W)=0,
+    \qquad q_m\in\Delta_{|\mathcal{D}_m|}.
+    \label{eq:constraints_new}
+\end{equation}
+The first line of Eq.~\eqref{eq:joint_objective_new} provides robust delay-marginalized data fitting. The second line imposes temporal delay consistency and directed state dynamics. The third line controls graph smoothness, sparsity, geographic preference, and row stability.
+
+\subsection{Graph-Update Gradient}
+\label{subsec:graph_gradient}
+For fixed $X$, define
+\begin{equation}
+    R_t(W)=x_{t+1}-A(W)x_t.
+    \label{eq:dynamic_residual_new}
+\end{equation}
+For an off-diagonal element $W_{ij}$, the gradient of the differentiable graph-dependent terms is
+\begin{align}
+    \frac{\partial\mathcal{J}_{\mathrm{smooth}}}{\partial W_{ij}}
+    ={}&
+    \frac{\beta}{\sigma_w^2}
+    \sum_{t=1}^{T-1}
+    R_{i,t}(W)\left(x_{i,t}-x_{j,t}\right)
+    \nonumber\\
+    &+\frac{\lambda_G}{2}
+    \sum_{t=1}^{T}
+    \left(x_{i,t}-x_{j,t}\right)^2
+    +2\lambda_r e_i,
+    \label{eq:graph_gradient_new}
+\end{align}
+where
+\begin{equation}
+    e_i=\left[(W\mathbf{1})_i-r_i(X)\right]_{+}.
+    \label{eq:row_excess_new}
+\end{equation}
+The weighted $\ell_1$ term $\sum_{i\neq j}c_{ij}W_{ij}$ is handled through a nonnegative proximal shrinkage step rather than being included in Eq.~\eqref{eq:graph_gradient_new}.
+
+\subsection{Delay-Backprojection Initialization}
+\label{subsec:backprojection_initialization}
+The revised method does not initialize the state using arrival-aligned interpolation alone. Each received message is distributed backward over its feasible generation times according to the normalized delay prior,
+\begin{equation}
+    \widetilde{x}_{i_m,a_m-d}
+    \leftarrow
+    \widetilde{x}_{i_m,a_m-d}
+    +\widetilde{\pi}_{m,d}y_m,
+    \qquad d\in\mathcal{D}_m,
+    \label{eq:backprojection_initialization_new}
+\end{equation}
+where $\widetilde{\pi}_{m,d}$ is the delay prior renormalized over $\mathcal{D}_m$. Contributions assigned to the same state-day are averaged using their accumulated weights. Remaining gaps are filled by within-node temporal interpolation followed by boundary propagation. The resulting nonnegative matrix initializes $X$, while $W$ is initialized at zero unless a fixed-graph comparator is being evaluated.
+
+\subsection{Staged Alternating Optimization}
+\label{subsec:staged_optimization}
+Direct joint optimization from an uninformative initialization can cause early graph estimates to absorb state-initialization error. We therefore use three stages:
+\begin{enumerate}
+    \item \textbf{State warm-up:} update $Q$ and $X$ while keeping $W$ fixed;
+    \item \textbf{Graph-learning stage:} temporarily fix $X$ and update $W$;
+    \item \textbf{Joint refinement:} alternate among $Q$, $X$, and $W$ until convergence.
+\end{enumerate}
+
+For the state update, projected gradient iterations with Armijo backtracking are applied to Eq.~\eqref{eq:joint_objective_new}. For the graph update, a gradient step is followed by weighted nonnegative soft-thresholding and projection onto the feasible set. If $C=[c_{ij}]$, the graph step has the form
+\begin{equation}
+    W^{(k+1)}
+    =\Pi_{\mathcal{C}}
+    \left(
+    \left[W^{(k)}-\zeta_k\nabla_W\mathcal{J}_{\mathrm{smooth}}
+    -\zeta_k C\right]_{+}
+    \right),
+    \label{eq:proximal_graph_update_new}
+\end{equation}
+where $\mathcal{C}$ enforces a zero diagonal and the broad stability cap, and $\zeta_k$ is selected by backtracking. The normalized objective is
+\begin{equation}
+    \overline{\mathcal{J}}^{(k)}
+    =\frac{\mathcal{J}^{(k)}}{M+n(T-1)},
+    \label{eq:normalized_objective_new}
+\end{equation}
+which permits convergence curves to be compared across problem sizes. Iterations stop when the relative objective decrease and the relative changes in both $X$ and $W$ fall below validation-fixed tolerances after the staged warm-up has been completed.
+
+\begin{algorithm}[!htbp]
+\caption{Leakage-safe delay-aware robust graph reconstruction}
+\label{alg:revised_method}
+\begin{algorithmic}[1]
+    \Require Received message records $\mathcal{M}$; maximum delay $D$; delay priors $\{\pi_s\}$; geographic reference $G^{\mathrm{geo}}$; train/validation-selected parameters.
+    \Ensure Estimated states $\widehat{X}$, directed association graph $\widehat{W}$, and delay responsibilities $\widehat{Q}$.
+    \State Initialize $X^{(0)}$ by delay backprojection and interpolation using Eq.~\eqref{eq:backprojection_initialization_new}.
+    \State Set $W^{(0)}=0$ and construct adaptive row targets from $X^{(0)}$.
+    \For{$k=0,1,\ldots,K-1$}
+        \State Update $Q^{(k+1)}$ using Eq.~\eqref{eq:tempered_delay_posterior_new}.
+        \If{$k<K_{\mathrm{warm}}$}
+            \State Update $X$ only; keep $W$ fixed.
+        \ElsIf{$k<K_{\mathrm{warm}}+K_{\mathrm{graph}}$}
+            \State Update $W$ only; keep $X$ fixed.
+        \Else
+            \State Update $X$ and $W$ by alternating projected/proximal steps.
+        \EndIf
+        \State Enforce $X\geq0$, $W\geq0$, $\operatorname{diag}(W)=0$, sparsity, and stability constraints.
+        \State Record the objective, normalized objective, state change, and graph change.
+        \If{all validation-fixed stopping conditions are satisfied}
+            \State \textbf{break}
+        \EndIf
+    \EndFor
+    \State \Return $\widehat{X}$, $\widehat{W}$, $\widehat{Q}$, and convergence diagnostics.
+\end{algorithmic}
+\end{algorithm}
+
+\subsection{Interpretation and Identifiability}
+\label{subsec:identifiability}
+The joint estimation of $X$ and $W$ from delayed, missing, and contaminated observations is not fully identifiable without structural information. The proposed penalties reduce, but do not eliminate, this ambiguity. Reliable state reconstruction requires sufficient temporal coverage, bounded delay, and an adequate number of received messages. Graph recovery additionally requires persistent inter-node variation, a sufficiently sparse or otherwise regularized graph, and observations informative enough to separate directed effects from common epidemic trends. Consequently, state accuracy and graph recovery are evaluated separately. On real RKI data, no true transmission graph is assumed; true directed graph recovery is assessed only in controlled synthetic and semi-synthetic experiments.
+
+\section{Experimental Setup}
+\label{sec:experimental_setup}
+
+\subsection{Real Epidemic Trajectories and Population Normalization}
+\label{subsec:rki_data_new}
+The semi-real study uses state-level daily epidemic trajectories derived from the RKI StopptCOVID data package. Available age groups are aggregated to produce one daily trajectory per selected German federal state. Population denominators correspond to the documented state populations referenced to 31 December 2020. The clean epidemic component is transformed using Eq.~\eqref{eq:latent_state_new}. Any optional centering or scaling is fitted on the training interval only; the primary reported analyses use the incidence-based transformed scale.
+
+The empirical and injected components are explicitly separated as follows:
+\begin{enumerate}
+    \item \textbf{Real epidemic trajectories:} clean RKI state-level time series;
+    \item \textbf{Artificial missingness:} Bernoulli message dropping;
+    \item \textbf{Artificial delays:} bounded random delivery delays;
+    \item \textbf{Artificial outliers:} additive contamination applied to selected received messages.
+\end{enumerate}
+No injected transport impairment is described as an observed property of the RKI reporting system.
+
+\subsection{Leakage-Safe Chronological Splits}
+\label{subsec:chronological_splits_new}
+The 365-day observation period is partitioned chronologically into 219 training days, 73 validation days, and 73 test days. Training and validation data are used exclusively to select model configuration, initialization, regularization weights, posterior temperature, delay-transition strength, stopping tolerances, graph threshold, and baseline settings. Only messages arriving no later than the end of the validation interval are available during model selection. After the configuration is frozen and recorded, the test interval is opened once for final evaluation. Test performance is not used to revise hyperparameters or select among model variants.
+
+\subsection{Fixed Corruption Templates and Nested Sweeps}
+\label{subsec:fixed_corruption_templates}
+For each random seed, four independent pseudo-random templates are generated and stored: delay uniforms, drop uniforms, outlier-location uniforms, and outlier magnitudes. The templates are reused across the levels of a sensitivity sweep. Consequently, increasing the missingness rate expands the dropped-message set without redrawing delays or outlier locations; increasing the outlier rate expands the contaminated set without changing delays or drops. This nested construction isolates the factor under study and permits paired comparisons across methods and severity levels.
+
+The primary semi-real scenario uses a maximum delay of six days, delay probabilities
+\begin{equation}
+    \pi=(0.30,0.25,0.18,0.12,0.08,0.05,0.02),
+    \label{eq:primary_delay_pmf_new}
+\end{equation}
+10\% message dropping, and 5\% outlier contamination among received reports. One-factor-at-a-time sweeps vary missingness, delay severity, outlier contamination, or inference-prior misspecification while preserving all other templates. The final semi-real experiments use 20 paired seeds.
+
+\subsection{Hyperparameter Selection}
+\label{subsec:hyperparameter_selection_new}
+Candidate configurations are declared before test evaluation. The search covers $\beta$, $\gamma$, $\sigma_w$, Huber threshold $\kappa$, graph smoothness $\lambda_G$, weighted sparsity $\lambda_W$, adaptive row penalty $\lambda_r$, posterior temperature $\tau$, delay-transition strength $\eta$, initialization type, and staged-optimization lengths. Each candidate is fitted using the training/validation portion, and the selection criterion is validation-state reconstruction error. Ties are resolved using simpler or sparser configurations and stable convergence diagnostics. The original arrival-aligned implementation is retained as an ablation rather than being overwritten.
+
+\begin{table}[!htbp]
+\centering
+\caption{Principal hyperparameters and leakage-safe selection protocol.}
+\label{tab:hyperparameter_protocol_new}
+\begin{tabular}{p{0.23\linewidth}p{0.16\linewidth}p{0.25\linewidth}p{0.28\linewidth}}
+\hline
+\textbf{Component} & \textbf{Symbol} & \textbf{Role} & \textbf{Selection rule} \\
+\hline
+Directed coupling & $\beta$ & Strength of graph-mediated state coupling & Train/validation only \\
+Decay coefficient & $\gamma$ & Temporal removal or contraction & Train/validation only \\
+Process scale & $\sigma_w$ & Dynamic-consistency weighting & Train/validation only \\
+Huber threshold & $\kappa$ & Outlier robustness & Train/validation only \\
+Graph smoothness & $\lambda_G$ & Association smoothness & Train/validation only \\
+Graph sparsity & $\lambda_W$ & Weighted edge shrinkage & Train/validation only \\
+Adaptive row penalty & $\lambda_r$ & Soft row-sum control & Train/validation only \\
+Posterior temperature & $\tau$ & Delay-posterior concentration & Train/validation only \\
+Delay consistency & $\eta$ & Temporal stability of delay estimates & Train/validation only \\
+Stopping tolerances & $\epsilon_J,\epsilon_X,\epsilon_W$ & Convergence rules & Fixed before test \\
+\hline
+\end{tabular}
+\end{table}
+
+\subsection{Retrospective Reconstruction and Causal Rolling Nowcasting}
+\label{subsec:evaluation_modes_new}
+Two evaluation modes are reported separately.
+
+\paragraph{Retrospective reconstruction.}
+All messages received by the end of the study window may be used to reconstruct the historical test interval. Reports generated within the test interval but received at a later test date are therefore available when reconstructing earlier test days. This setting evaluates historical smoothing and reconstruction and is not described as forecasting or nowcasting.
+
+\paragraph{Causal rolling nowcasting.}
+For each test day $t$, the estimator receives only messages whose arrival time is no later than $t$. A report generated before or at $t$ but arriving after $t$ remains unavailable for that evaluation origin. The estimator is advanced sequentially and warm-started from the preceding origin. This protocol prevents future-arrival leakage and represents the operational nowcasting setting.
+
+\subsection{Comparators and Ablations}
+\label{subsec:comparators_new}
+The revised evaluation includes the following comparators:
+\begin{enumerate}
+    \item \textbf{Arrival-aligned interpolation:} treats each received value as contemporaneous with its arrival time;
+    \item \textbf{Oracle timestamp interpolation:} aligns reports using known injected generation times and is used only as an upper/reference bound;
+    \item \textbf{Delay-backprojection reconstruction:} applies the initialization in Eq.~\eqref{eq:backprojection_initialization_new} without joint graph learning;
+    \item \textbf{Kalman/RTS smoother:} an internal linear state-space implementation;
+    \item \textbf{Delay-aware augmented state-space model:} an internal implementation with delayed state augmentation;
+    \item \textbf{Graph-temporal reconstruction:} graph-coupled temporal smoothing;
+    \item \textbf{Robust median smoother:} a robust local temporal baseline;
+    \item \textbf{Robust low-rank completion:} a low-rank matrix-reconstruction baseline with robust preprocessing;
+    \item \textbf{Fixed geographic graph:} uses the geographic reference as a fixed graph rather than learning $W$;
+    \item \textbf{No-delay ablation:} removes delay marginalization;
+    \item \textbf{No-robustness ablation:} replaces the Huber loss with a quadratic loss;
+    \item \textbf{No-graph ablation:} removes graph coupling;
+    \item \textbf{Original proposed ablation:} retains arrival-aligned initialization and hard geographic restriction from the earlier implementation.
+\end{enumerate}
+Internal implementations are identified as such and are not claimed to reproduce a specific published software package unless their algorithms and settings match that package exactly.
+
+\subsection{Synthetic Directed-Graph Recovery}
+\label{subsec:synthetic_graph_recovery_new}
+Because RKI data do not provide a true transmission graph, graph recovery is evaluated in separate controlled experiments with a known directed adjacency matrix $W^{\star}$. Candidate edges are not restricted to the support of $W^{\star}$. Experiments include sparse, dense, and time-varying directed graphs. Additional mismatch settings include nonlinear epidemic dynamics, nonstationary delays, abrupt intervention effects, and observation-model mismatch. Edge uncertainty is summarized by selection frequency across independent seeds.
+
+\subsection{Evaluation Metrics}
+\label{subsec:evaluation_metrics_new}
+State reconstruction is evaluated using root-mean-square error, mean absolute error, coefficient of determination, Pearson correlation, bias, and trajectory-level diagnostics. For the real-data graph, reported quantities are limited to learned density, maximum row sum, agreement with the geographic reference, stability across seeds, edge selection frequency, and edge-weight uncertainty.
+
+When $W^{\star}$ is available, graph recovery is evaluated using support precision, support recall, F1 score, area under the receiver-operating-characteristic curve, area under the precision--recall curve, normalized Frobenius error, structural Hamming distance, and edge-weight correlation. The support threshold is selected using validation data or a predeclared rule and is not tuned on test outcomes.
+
+\subsection{Statistical Analysis}
+\label{subsec:statistical_analysis_new}
+The random seed is treated as the independent experimental block. Methods are compared on the same corruption templates and seeds, thereby enabling paired analysis. Scenarios are not treated as substitute independent replicates. For each method and scenario, results are summarized using mean $\pm$ standard deviation, median and interquartile range where appropriate, and bootstrap 95\% confidence intervals. Pairwise comparisons use the Wilcoxon signed-rank test and, when distributional assumptions are adequate, the paired $t$-test. Effect sizes are reported, and multiplicity is controlled using Holm correction. Friedman tests and average ranks are used only when the independent blocking structure is valid. The expression ``significantly better'' is used only when supported by the corrected paired analysis.
+
+\subsection{Sensitivity, Model Mismatch, and Scalability}
+\label{subsec:additional_experiments_new}
+Sensitivity experiments vary one factor at a time, including missingness, delay severity, outlier contamination, delay-prior misspecification, and principal regularization parameters. Model-mismatch experiments assess nonstationary delays, nonlinear epidemic dynamics, abrupt intervention effects, time-varying graphs, and observation-model mismatch. Scalability is assessed with respect to the number of nodes $n$, time points $T$, maximum delay $D$, and graph density. Runtime and absolute process peak resident-set size are recorded. Convergence analysis is restricted to the proposed method and uses the normalized objective in Eq.~\eqref{eq:normalized_objective_new}.
+
+\subsection{Uncertainty Quantification}
+\label{subsec:uncertainty_quantification_new}
+State uncertainty is summarized using empirical intervals across matched seeds and bootstrap confidence intervals for aggregate metrics. Graph uncertainty is quantified through edge selection frequency and edge-weight variability across seeds. These intervals describe algorithmic and corruption-induced variability under the study design; they are not interpreted as fully calibrated epidemiological posterior credible intervals.
+
+\subsection{Implementation and Reproducibility}
+\label{subsec:implementation_reproducibility_new}
+All random components are controlled by explicit seeds stored in configuration files. The released implementation contains the real-data preparation pipeline, corruption-template generator, proposed model, comparators, tuning routine, locked-test protocol, statistical analysis, figure generation, and end-to-end runners. Unit tests and smoke tests are used to verify data integrity, objective behavior, and pipeline execution. All reported numerical claims are generated from saved outputs rather than entered manually.

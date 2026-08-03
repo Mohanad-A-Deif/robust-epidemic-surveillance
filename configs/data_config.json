@@ -1,0 +1,394 @@
+{
+  "dataset_name": "RKI_StopptCOVID_SemiReal_StateNetwork",
+  "source": {
+    "publisher": "Robert Koch Institute (RKI)",
+    "repository": "StopptCOVID-Studie_Daten_Analyse_und_Ergebnisse",
+    "doi": "10.5281/zenodo.10888033",
+    "version_date": "2024-03-28",
+    "file_name": "IfSG_COVID-19_Erkrankungsbeginn_Erwartungswert.csv",
+    "download_url": "https://zenodo.org/records/10888033/files/IfSG_COVID-19_Erkrankungsbeginn_Erwartungswert.csv?download=1",
+    "md5": "e59953809e7a8050bb40045c6172ee30",
+    "license": "CC BY 4.0",
+    "fallback_urls": [
+      "https://raw.githubusercontent.com/robert-koch-institut/StopptCOVID-Studie_Daten_Analyse_und_Ergebnisse/main/Daten/IfSG_COVID-19_Erkrankungsbeginn_Erwartungswert.csv"
+    ]
+  },
+  "selected_states": [
+    "Baden-Württemberg",
+    "Bayern",
+    "Hessen",
+    "Niedersachsen",
+    "Nordrhein-Westfalen",
+    "Rheinland-Pfalz"
+  ],
+  "date_start": "2020-02-20",
+  "date_end": "2021-02-18",
+  "aggregate_age_groups": true,
+  "fill_missing_zero": false,
+  "transform": {
+    "primary": "incidence_per_100k_then_log1p",
+    "standard_deviation_floor": 1e-08
+  },
+  "split": {
+    "train_fraction": 0.6,
+    "validation_fraction": 0.2,
+    "test_fraction": 0.2
+  },
+  "nodes": [
+    {
+      "node_id": 0,
+      "code": "BW",
+      "state": "Baden-Württemberg",
+      "slice_id": "critical"
+    },
+    {
+      "node_id": 1,
+      "code": "BY",
+      "state": "Bayern",
+      "slice_id": "critical"
+    },
+    {
+      "node_id": 2,
+      "code": "HE",
+      "state": "Hessen",
+      "slice_id": "critical"
+    },
+    {
+      "node_id": 3,
+      "code": "NI",
+      "state": "Niedersachsen",
+      "slice_id": "standard"
+    },
+    {
+      "node_id": 4,
+      "code": "NW",
+      "state": "Nordrhein-Westfalen",
+      "slice_id": "standard"
+    },
+    {
+      "node_id": 5,
+      "code": "RP",
+      "state": "Rheinland-Pfalz",
+      "slice_id": "standard"
+    }
+  ],
+  "undirected_reference_edges": [
+    [
+      "BW",
+      "BY"
+    ],
+    [
+      "BW",
+      "HE"
+    ],
+    [
+      "BW",
+      "RP"
+    ],
+    [
+      "BY",
+      "HE"
+    ],
+    [
+      "HE",
+      "NI"
+    ],
+    [
+      "HE",
+      "NW"
+    ],
+    [
+      "HE",
+      "RP"
+    ],
+    [
+      "NI",
+      "NW"
+    ],
+    [
+      "NW",
+      "RP"
+    ]
+  ],
+  "scenario_generation": {
+    "seeds": [
+      1101,
+      1102,
+      1103,
+      1104,
+      1105,
+      1106,
+      1107,
+      1108,
+      1109,
+      1110,
+      1111,
+      1112,
+      1113,
+      1114,
+      1115,
+      1116,
+      1117,
+      1118,
+      1119,
+      1120
+    ],
+    "outlier_scale": 6.0,
+    "critical_zero_delay_bonus": 0.1,
+    "critical_drop_multiplier": 0.75,
+    "scenarios": [
+      {
+        "name": "reference_moderate",
+        "family": "main",
+        "max_delay": 6,
+        "delay_pmf": [
+          0.3,
+          0.25,
+          0.18,
+          0.12,
+          0.08,
+          0.05,
+          0.02
+        ],
+        "drop_probability": 0.1,
+        "outlier_probability": 0.05
+      },
+      {
+        "name": "missing_00",
+        "family": "missingness",
+        "max_delay": 6,
+        "delay_pmf": [
+          0.3,
+          0.25,
+          0.18,
+          0.12,
+          0.08,
+          0.05,
+          0.02
+        ],
+        "drop_probability": 0.0,
+        "outlier_probability": 0.05
+      },
+      {
+        "name": "missing_10",
+        "family": "missingness",
+        "max_delay": 6,
+        "delay_pmf": [
+          0.3,
+          0.25,
+          0.18,
+          0.12,
+          0.08,
+          0.05,
+          0.02
+        ],
+        "drop_probability": 0.1,
+        "outlier_probability": 0.05
+      },
+      {
+        "name": "missing_30",
+        "family": "missingness",
+        "max_delay": 6,
+        "delay_pmf": [
+          0.3,
+          0.25,
+          0.18,
+          0.12,
+          0.08,
+          0.05,
+          0.02
+        ],
+        "drop_probability": 0.3,
+        "outlier_probability": 0.05
+      },
+      {
+        "name": "missing_50",
+        "family": "missingness",
+        "max_delay": 6,
+        "delay_pmf": [
+          0.3,
+          0.25,
+          0.18,
+          0.12,
+          0.08,
+          0.05,
+          0.02
+        ],
+        "drop_probability": 0.5,
+        "outlier_probability": 0.05
+      },
+      {
+        "name": "delay_light",
+        "family": "delay",
+        "max_delay": 4,
+        "delay_pmf": [
+          0.55,
+          0.25,
+          0.12,
+          0.06,
+          0.02
+        ],
+        "drop_probability": 0.1,
+        "outlier_probability": 0.05
+      },
+      {
+        "name": "delay_moderate",
+        "family": "delay",
+        "max_delay": 6,
+        "delay_pmf": [
+          0.3,
+          0.25,
+          0.18,
+          0.12,
+          0.08,
+          0.05,
+          0.02
+        ],
+        "drop_probability": 0.1,
+        "outlier_probability": 0.05
+      },
+      {
+        "name": "delay_severe",
+        "family": "delay",
+        "max_delay": 8,
+        "delay_pmf": [
+          0.14,
+          0.15,
+          0.16,
+          0.15,
+          0.13,
+          0.1,
+          0.08,
+          0.05,
+          0.04
+        ],
+        "drop_probability": 0.1,
+        "outlier_probability": 0.05
+      },
+      {
+        "name": "outlier_00",
+        "family": "outlier",
+        "max_delay": 6,
+        "delay_pmf": [
+          0.3,
+          0.25,
+          0.18,
+          0.12,
+          0.08,
+          0.05,
+          0.02
+        ],
+        "drop_probability": 0.1,
+        "outlier_probability": 0.0
+      },
+      {
+        "name": "outlier_05",
+        "family": "outlier",
+        "max_delay": 6,
+        "delay_pmf": [
+          0.3,
+          0.25,
+          0.18,
+          0.12,
+          0.08,
+          0.05,
+          0.02
+        ],
+        "drop_probability": 0.1,
+        "outlier_probability": 0.05
+      },
+      {
+        "name": "outlier_10",
+        "family": "outlier",
+        "max_delay": 6,
+        "delay_pmf": [
+          0.3,
+          0.25,
+          0.18,
+          0.12,
+          0.08,
+          0.05,
+          0.02
+        ],
+        "drop_probability": 0.1,
+        "outlier_probability": 0.1
+      },
+      {
+        "name": "outlier_20",
+        "family": "outlier",
+        "max_delay": 6,
+        "delay_pmf": [
+          0.3,
+          0.25,
+          0.18,
+          0.12,
+          0.08,
+          0.05,
+          0.02
+        ],
+        "drop_probability": 0.1,
+        "outlier_probability": 0.2
+      },
+      {
+        "name": "outlier_30",
+        "family": "outlier",
+        "max_delay": 6,
+        "delay_pmf": [
+          0.3,
+          0.25,
+          0.18,
+          0.12,
+          0.08,
+          0.05,
+          0.02
+        ],
+        "drop_probability": 0.1,
+        "outlier_probability": 0.3
+      },
+      {
+        "name": "prior_mismatch",
+        "family": "model_mismatch",
+        "max_delay": 8,
+        "delay_pmf": [
+          0.12,
+          0.13,
+          0.14,
+          0.15,
+          0.14,
+          0.11,
+          0.09,
+          0.07,
+          0.05
+        ],
+        "inference_delay_pmf": [
+          0.3,
+          0.25,
+          0.18,
+          0.12,
+          0.08,
+          0.05,
+          0.02,
+          0.0,
+          0.0
+        ],
+        "drop_probability": 0.1,
+        "outlier_probability": 0.05
+      }
+    ],
+    "template_version": "nested_independent_streams_v1"
+  },
+  "population": {
+    "reference_date": "2020-12-31",
+    "source": "German Federal Statistical Office (Destatis), GENESIS-Online table 12411-0017; values used by the RKI repository population file",
+    "source_url": "https://www-genesis.destatis.de/datenbank/online/statistic/12411/table/12411-0017",
+    "unit": "persons",
+    "values": {
+      "Baden-Württemberg": 11103043,
+      "Bayern": 13140183,
+      "Hessen": 6293154,
+      "Niedersachsen": 8003421,
+      "Nordrhein-Westfalen": 17925570,
+      "Rheinland-Pfalz": 4098391
+    }
+  }
+}

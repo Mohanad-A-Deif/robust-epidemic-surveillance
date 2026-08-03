@@ -1,0 +1,20 @@
+\begin{table}[!htbp]
+\centering
+\caption{Average ranks computed with independent seeds as blocks within each scenario.}
+\label{tab:causal_nowcasting_ranks}
+\resizebox{\linewidth}{!}{%
+\begin{tabular}{llrr}
+\toprule
+scenario & method & average_rank & rank_std \\
+\midrule
+reference_moderate & Kalman/RTS smoother (internal) & 1.3 & 0.57124 \\
+reference_moderate & Delay-aware state-space (internal) & 2.55 & 0.60481 \\
+reference_moderate & Proposed revised & 3.7 & 2.4301 \\
+reference_moderate & Oracle timestamp interpolation & 5 & 1.9735 \\
+reference_moderate & Robust median smoother & 5.025 & 0.69727 \\
+reference_moderate & Arrival interpolation & 5.025 & 0.69727 \\
+reference_moderate & Delay backprojection & 5.4 & 0.99472 \\
+\bottomrule
+\end{tabular}
+}
+\end{table}

@@ -1,0 +1,36 @@
+{
+  "scenario": "missing_50",
+  "family": "missingness",
+  "seed": 1119,
+  "template_sha256": "d70ea405ece480bfb66281af689c8bbd66e62eb4653998d4071d6211128dac60",
+  "n_generated": 2190,
+  "n_received": 1173,
+  "n_dropped": 1012,
+  "n_right_censored": 5,
+  "n_outliers_received": 51,
+  "realized_drop_fraction": 0.4621004566210046,
+  "realized_received_fraction": 0.5356164383561643,
+  "realized_outlier_fraction_among_received": 0.043478260869565216,
+  "mean_delay_all_generated": 1.6296803652968037,
+  "mean_delay_received": 1.630861040068201,
+  "rows_participating_in_same_node_same_arrival_collisions": 442,
+  "generation_delay_pmf_base": [
+    0.3,
+    0.25,
+    0.18,
+    0.12,
+    0.08,
+    0.05,
+    0.02
+  ],
+  "inference_delay_pmf_base": [
+    0.3,
+    0.25,
+    0.18,
+    0.12,
+    0.08,
+    0.05,
+    0.02
+  ],
+  "nested_sweep_note": "Delay, drop, outlier-selection, and outlier-magnitude random templates are fixed per seed and reused across scenarios."
+}

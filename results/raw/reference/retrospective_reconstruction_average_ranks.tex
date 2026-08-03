@@ -1,0 +1,28 @@
+\begin{table}[!htbp]
+\centering
+\caption{Average ranks computed with independent seeds as blocks within each scenario.}
+\label{tab:retrospective_reconstruction_ranks}
+\resizebox{\linewidth}{!}{%
+\begin{tabular}{llrr}
+\toprule
+scenario & method & average_rank & rank_std \\
+\midrule
+reference_moderate & No-delay ablation & 2.45 & 1.572 \\
+reference_moderate & Known-delay proposed oracle & 2.6 & 1.6983 \\
+reference_moderate & Original proposed ablation & 3.25 & 1.5174 \\
+reference_moderate & Proposed revised & 3.8 & 1.1517 \\
+reference_moderate & Fixed geographic graph & 4.1 & 1.619 \\
+reference_moderate & No-graph ablation & 5.65 & 1.0894 \\
+reference_moderate & Robust median smoother & 7.25 & 2.7886 \\
+reference_moderate & No-robustness ablation & 8.45 & 1.3169 \\
+reference_moderate & Kalman/RTS smoother (internal) & 8.65 & 1.0894 \\
+reference_moderate & Delay-aware state-space (internal) & 9.1 & 0.96791 \\
+reference_moderate & Graph-temporal reconstruction & 11.2 & 0.83351 \\
+reference_moderate & Delay backprojection & 11.5 & 0.60698 \\
+reference_moderate & Arrival interpolation & 13.25 & 0.55012 \\
+reference_moderate & Oracle timestamp interpolation & 14.3 & 0.80131 \\
+reference_moderate & Robust low-rank completion & 14.45 & 0.51042 \\
+\bottomrule
+\end{tabular}
+}
+\end{table}

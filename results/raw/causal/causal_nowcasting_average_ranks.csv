@@ -1,0 +1,8 @@
+scenario,method,average_rank,rank_std
+reference_moderate,Kalman/RTS smoother (internal),1.3,0.5712405705774793
+reference_moderate,Delay-aware state-space (internal),2.55,0.6048053188292994
+reference_moderate,Proposed revised,3.7,2.4300747226977895
+reference_moderate,Oracle timestamp interpolation,5.0,1.9735087641318605
+reference_moderate,Robust median smoother,5.025,0.6972691091152079
+reference_moderate,Arrival interpolation,5.025,0.6972691091152079
+reference_moderate,Delay backprojection,5.4,0.9947229183096801

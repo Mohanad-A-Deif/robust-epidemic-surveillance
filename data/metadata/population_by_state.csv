@@ -1,0 +1,7 @@
+node_id,code,state,population,reference_date,source,source_url
+0,BW,Baden-Württemberg,11103043,2020-12-31,"German Federal Statistical Office (Destatis), GENESIS-Online table 12411-0017; values used by the RKI repository population file",https://www-genesis.destatis.de/datenbank/online/statistic/12411/table/12411-0017
+1,BY,Bayern,13140183,2020-12-31,"German Federal Statistical Office (Destatis), GENESIS-Online table 12411-0017; values used by the RKI repository population file",https://www-genesis.destatis.de/datenbank/online/statistic/12411/table/12411-0017
+2,HE,Hessen,6293154,2020-12-31,"German Federal Statistical Office (Destatis), GENESIS-Online table 12411-0017; values used by the RKI repository population file",https://www-genesis.destatis.de/datenbank/online/statistic/12411/table/12411-0017
+3,NI,Niedersachsen,8003421,2020-12-31,"German Federal Statistical Office (Destatis), GENESIS-Online table 12411-0017; values used by the RKI repository population file",https://www-genesis.destatis.de/datenbank/online/statistic/12411/table/12411-0017
+4,NW,Nordrhein-Westfalen,17925570,2020-12-31,"German Federal Statistical Office (Destatis), GENESIS-Online table 12411-0017; values used by the RKI repository population file",https://www-genesis.destatis.de/datenbank/online/statistic/12411/table/12411-0017
+5,RP,Rheinland-Pfalz,4098391,2020-12-31,"German Federal Statistical Office (Destatis), GENESIS-Online table 12411-0017; values used by the RKI repository population file",https://www-genesis.destatis.de/datenbank/online/statistic/12411/table/12411-0017

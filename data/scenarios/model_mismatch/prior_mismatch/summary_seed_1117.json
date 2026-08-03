@@ -1,0 +1,40 @@
+{
+  "scenario": "prior_mismatch",
+  "family": "model_mismatch",
+  "seed": 1117,
+  "template_sha256": "79d5ea0a45d917e192e9499562f9dea4928533002e33319bcfce620322ad37f7",
+  "n_generated": 2190,
+  "n_received": 1960,
+  "n_dropped": 211,
+  "n_right_censored": 19,
+  "n_outliers_received": 100,
+  "realized_drop_fraction": 0.09634703196347032,
+  "realized_received_fraction": 0.8949771689497716,
+  "realized_outlier_fraction_among_received": 0.05102040816326531,
+  "mean_delay_all_generated": 3.258904109589041,
+  "mean_delay_received": 3.237755102040816,
+  "rows_participating_in_same_node_same_arrival_collisions": 1134,
+  "generation_delay_pmf_base": [
+    0.12,
+    0.13,
+    0.14,
+    0.15,
+    0.14,
+    0.11,
+    0.09,
+    0.07,
+    0.05
+  ],
+  "inference_delay_pmf_base": [
+    0.3,
+    0.25,
+    0.18,
+    0.12,
+    0.08,
+    0.05,
+    0.02,
+    0.0,
+    0.0
+  ],
+  "nested_sweep_note": "Delay, drop, outlier-selection, and outlier-magnitude random templates are fixed per seed and reused across scenarios."
+}

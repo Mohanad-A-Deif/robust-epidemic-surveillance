@@ -1,0 +1,32 @@
+{
+  "scenario": "delay_light",
+  "family": "delay",
+  "seed": 1103,
+  "template_sha256": "75feb8e197518406b5e49ff6c1070671d8396c7767397a19a17a185f026f1ad6",
+  "n_generated": 2190,
+  "n_received": 2015,
+  "n_dropped": 172,
+  "n_right_censored": 3,
+  "n_outliers_received": 107,
+  "realized_drop_fraction": 0.07853881278538813,
+  "realized_received_fraction": 0.9200913242009132,
+  "realized_outlier_fraction_among_received": 0.05310173697270471,
+  "mean_delay_all_generated": 0.7114155251141553,
+  "mean_delay_received": 0.7032258064516129,
+  "rows_participating_in_same_node_same_arrival_collisions": 935,
+  "generation_delay_pmf_base": [
+    0.55,
+    0.25,
+    0.12,
+    0.06,
+    0.02
+  ],
+  "inference_delay_pmf_base": [
+    0.55,
+    0.25,
+    0.12,
+    0.06,
+    0.02
+  ],
+  "nested_sweep_note": "Delay, drop, outlier-selection, and outlier-magnitude random templates are fixed per seed and reused across scenarios."
+}

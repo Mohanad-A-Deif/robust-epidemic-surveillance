@@ -1,0 +1,7 @@
+node_id,code,state,slice_id,population,population_reference_date
+0,BW,Baden-Württemberg,critical,11103043,2020-12-31
+1,BY,Bayern,critical,13140183,2020-12-31
+2,HE,Hessen,critical,6293154,2020-12-31
+3,NI,Niedersachsen,standard,8003421,2020-12-31
+4,NW,Nordrhein-Westfalen,standard,17925570,2020-12-31
+5,RP,Rheinland-Pfalz,standard,4098391,2020-12-31

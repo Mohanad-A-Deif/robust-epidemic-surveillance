@@ -1,0 +1,110 @@
+\begin{table}[!htbp]
+\centering
+\caption{Seed-level summary with bootstrap 95% confidence intervals.}
+\label{tab:retrospective_reconstruction_summary}
+\resizebox{\linewidth}{!}{%
+\begin{tabular}{lllllrrrrrrrr}
+\toprule
+scenario & family & method & evaluation & metric & n & mean & std & median & q1 & q3 & ci95_low & ci95_high \\
+\midrule
+reference_moderate & main & Arrival interpolation & retrospective reconstruction & rmse & 20 & 1.3582 & 0.55821 & 1.2022 & 0.92812 & 1.7262 & 1.1307 & 1.5953 \\
+reference_moderate & main & Arrival interpolation & retrospective reconstruction & mae & 20 & 0.34574 & 0.088882 & 0.30995 & 0.27837 & 0.41535 & 0.3098 & 0.38543 \\
+reference_moderate & main & Arrival interpolation & retrospective reconstruction & r2 & 20 & -12.574 & 10.83 & -8.1738 & -17.998 & -4.4632 & -17.258 & -8.3031 \\
+reference_moderate & main & Arrival interpolation & retrospective reconstruction & pearson_r & 20 & 0.30894 & 0.12635 & 0.30206 & 0.21999 & 0.37728 & 0.25507 & 0.36237 \\
+reference_moderate & main & Arrival interpolation & retrospective reconstruction & runtime_seconds & 20 & 0.0092597 & 0.0078554 & 0.0058863 & 0.0053781 & 0.0087275 & 0.0064637 & 0.013077 \\
+reference_moderate & main & Arrival interpolation & retrospective reconstruction & peak_memory_mb & 20 & 0.15625 & 0.27168 & 0 & 0 & 0.21875 & 0.05 & 0.275 \\
+reference_moderate & main & Delay backprojection & retrospective reconstruction & rmse & 20 & 1.0199 & 0.45384 & 0.82835 & 0.69461 & 1.1667 & 0.8412 & 1.2187 \\
+reference_moderate & main & Delay backprojection & retrospective reconstruction & mae & 20 & 0.36636 & 0.091238 & 0.35982 & 0.30342 & 0.41821 & 0.3294 & 0.40755 \\
+reference_moderate & main & Delay backprojection & retrospective reconstruction & r2 & 20 & -6.8366 & 7.1456 & -3.3514 & -7.7659 & -2.0595 & -10.01 & -4.0713 \\
+reference_moderate & main & Delay backprojection & retrospective reconstruction & pearson_r & 20 & 0.40272 & 0.15209 & 0.39772 & 0.30326 & 0.49703 & 0.33554 & 0.46617 \\
+reference_moderate & main & Delay backprojection & retrospective reconstruction & runtime_seconds & 20 & 0.038556 & 0.015392 & 0.038549 & 0.023941 & 0.055465 & 0.032089 & 0.045196 \\
+reference_moderate & main & Delay backprojection & retrospective reconstruction & peak_memory_mb & 20 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+reference_moderate & main & Delay-aware state-space (internal) & retrospective reconstruction & rmse & 20 & 0.72683 & 0.29795 & 0.59364 & 0.54859 & 0.85023 & 0.60786 & 0.85779 \\
+reference_moderate & main & Delay-aware state-space (internal) & retrospective reconstruction & mae & 20 & 0.34651 & 0.087315 & 0.33577 & 0.28154 & 0.40278 & 0.3111 & 0.38514 \\
+reference_moderate & main & Delay-aware state-space (internal) & retrospective reconstruction & r2 & 20 & -2.8847 & 3.2681 & -1.2348 & -3.6751 & -0.90851 & -4.3404 & -1.5995 \\
+reference_moderate & main & Delay-aware state-space (internal) & retrospective reconstruction & pearson_r & 20 & 0.50736 & 0.17252 & 0.51564 & 0.4263 & 0.63166 & 0.43063 & 0.57817 \\
+reference_moderate & main & Delay-aware state-space (internal) & retrospective reconstruction & runtime_seconds & 20 & 0.036253 & 0.016272 & 0.034161 & 0.021514 & 0.050434 & 0.029611 & 0.043563 \\
+reference_moderate & main & Delay-aware state-space (internal) & retrospective reconstruction & peak_memory_mb & 20 & 0.0375 & 0.10016 & 0 & 0 & 0 & 0 & 0.0875 \\
+reference_moderate & main & Fixed geographic graph & retrospective reconstruction & rmse & 20 & 0.32303 & 0.024023 & 0.33353 & 0.30516 & 0.34182 & 0.31258 & 0.33286 \\
+reference_moderate & main & Fixed geographic graph & retrospective reconstruction & mae & 20 & 0.26794 & 0.023333 & 0.27499 & 0.24724 & 0.28601 & 0.25762 & 0.27757 \\
+reference_moderate & main & Fixed geographic graph & retrospective reconstruction & r2 & 20 & 0.33482 & 0.095965 & 0.29457 & 0.25906 & 0.40947 & 0.29519 & 0.3764 \\
+reference_moderate & main & Fixed geographic graph & retrospective reconstruction & pearson_r & 20 & 0.87801 & 0.040173 & 0.88542 & 0.87322 & 0.89962 & 0.85871 & 0.89341 \\
+reference_moderate & main & Fixed geographic graph & retrospective reconstruction & runtime_seconds & 20 & 8.3279 & 2.8041 & 8.5274 & 5.7749 & 9.6538 & 7.1851 & 9.5652 \\
+reference_moderate & main & Fixed geographic graph & retrospective reconstruction & peak_memory_mb & 20 & 0.04375 & 0.10159 & 0 & 0 & 0 & 0.00625 & 0.09375 \\
+reference_moderate & main & Fixed geographic graph & retrospective reconstruction & delay_mae & 20 & 1.3226 & 0.019296 & 1.3214 & 1.3115 & 1.3278 & 1.3148 & 1.3314 \\
+reference_moderate & main & Graph-temporal reconstruction & retrospective reconstruction & rmse & 20 & 1.0104 & 0.40894 & 0.93757 & 0.70296 & 1.2976 & 0.843 & 1.1834 \\
+reference_moderate & main & Graph-temporal reconstruction & retrospective reconstruction & mae & 20 & 0.30642 & 0.075795 & 0.29772 & 0.24754 & 0.37374 & 0.27499 & 0.33924 \\
+reference_moderate & main & Graph-temporal reconstruction & retrospective reconstruction & r2 & 20 & -6.4814 & 5.816 & -4.5876 & -9.7001 & -2.1345 & -8.95 & -4.1546 \\
+reference_moderate & main & Graph-temporal reconstruction & retrospective reconstruction & pearson_r & 20 & 0.38268 & 0.14119 & 0.38664 & 0.28109 & 0.45262 & 0.32276 & 0.4433 \\
+reference_moderate & main & Graph-temporal reconstruction & retrospective reconstruction & runtime_seconds & 20 & 0.0091291 & 0.0053452 & 0.0080023 & 0.0062923 & 0.0097548 & 0.0074291 & 0.011723 \\
+reference_moderate & main & Graph-temporal reconstruction & retrospective reconstruction & peak_memory_mb & 20 & 0.00625 & 0.027951 & 0 & 0 & 0 & 0 & 0.01875 \\
+reference_moderate & main & Kalman/RTS smoother (internal) & retrospective reconstruction & rmse & 20 & 0.68698 & 0.24217 & 0.6393 & 0.52365 & 0.82238 & 0.58764 & 0.79003 \\
+reference_moderate & main & Kalman/RTS smoother (internal) & retrospective reconstruction & mae & 20 & 0.34022 & 0.080154 & 0.337 & 0.29244 & 0.39422 & 0.30673 & 0.3743 \\
+reference_moderate & main & Kalman/RTS smoother (internal) & retrospective reconstruction & r2 & 20 & -2.346 & 2.3278 & -1.5917 & -3.2888 & -0.73914 & -3.3728 & -1.4202 \\
+reference_moderate & main & Kalman/RTS smoother (internal) & retrospective reconstruction & pearson_r & 20 & 0.51137 & 0.18156 & 0.57359 & 0.40988 & 0.62604 & 0.42971 & 0.58504 \\
+reference_moderate & main & Kalman/RTS smoother (internal) & retrospective reconstruction & runtime_seconds & 20 & 0.013034 & 0.0064738 & 0.011185 & 0.0085582 & 0.014669 & 0.010579 & 0.016026 \\
+reference_moderate & main & Kalman/RTS smoother (internal) & retrospective reconstruction & peak_memory_mb & 20 & 0.0125 & 0.055902 & 0 & 0 & 0 & 0 & 0.0375 \\
+reference_moderate & main & Known-delay proposed oracle & retrospective reconstruction & rmse & 20 & 0.32582 & 0.12228 & 0.2928 & 0.25325 & 0.31654 & 0.28071 & 0.38241 \\
+reference_moderate & main & Known-delay proposed oracle & retrospective reconstruction & mae & 20 & 0.24903 & 0.044673 & 0.25104 & 0.2118 & 0.26554 & 0.23089 & 0.26824 \\
+reference_moderate & main & Known-delay proposed oracle & retrospective reconstruction & r2 & 20 & 0.23674 & 0.70735 & 0.45631 & 0.36377 & 0.59331 & -0.096812 & 0.49153 \\
+reference_moderate & main & Known-delay proposed oracle & retrospective reconstruction & pearson_r & 20 & 0.80748 & 0.12169 & 0.8511 & 0.82247 & 0.87593 & 0.75047 & 0.85155 \\
+reference_moderate & main & Known-delay proposed oracle & retrospective reconstruction & runtime_seconds & 20 & 13.228 & 3.3417 & 13.794 & 11.173 & 15.048 & 11.766 & 14.578 \\
+reference_moderate & main & Known-delay proposed oracle & retrospective reconstruction & peak_memory_mb & 20 & 0.17773 & 0.68029 & 0 & 0 & 0 & 0.00625 & 0.4957 \\
+reference_moderate & main & Known-delay proposed oracle & retrospective reconstruction & delay_mae & 20 & 1.462 & 0.050077 & 1.4445 & 1.426 & 1.502 & 1.4415 & 1.4842 \\
+reference_moderate & main & No-delay ablation & retrospective reconstruction & rmse & 20 & 0.30071 & 0.050595 & 0.29011 & 0.26697 & 0.31407 & 0.2806 & 0.32248 \\
+reference_moderate & main & No-delay ablation & retrospective reconstruction & mae & 20 & 0.24416 & 0.032789 & 0.238 & 0.21788 & 0.26639 & 0.23068 & 0.25793 \\
+reference_moderate & main & No-delay ablation & retrospective reconstruction & r2 & 20 & 0.41115 & 0.20912 & 0.46623 & 0.37449 & 0.54806 & 0.31974 & 0.49302 \\
+reference_moderate & main & No-delay ablation & retrospective reconstruction & pearson_r & 20 & 0.81863 & 0.059986 & 0.83636 & 0.80096 & 0.85116 & 0.7901 & 0.84099 \\
+reference_moderate & main & No-delay ablation & retrospective reconstruction & runtime_seconds & 20 & 14.231 & 2.2189 & 14.142 & 12.724 & 16.477 & 13.221 & 15.167 \\
+reference_moderate & main & No-delay ablation & retrospective reconstruction & peak_memory_mb & 20 & 0.17148 & 0.68137 & 0 & 0 & 0 & 0 & 0.48945 \\
+reference_moderate & main & No-delay ablation & retrospective reconstruction & delay_mae & 20 & 1.581 & 0.032996 & 1.577 & 1.5575 & 1.5952 & 1.5676 & 1.5959 \\
+reference_moderate & main & No-graph ablation & retrospective reconstruction & rmse & 20 & 0.35651 & 0.047058 & 0.35074 & 0.32644 & 0.36861 & 0.33747 & 0.37722 \\
+reference_moderate & main & No-graph ablation & retrospective reconstruction & mae & 20 & 0.28873 & 0.026135 & 0.29291 & 0.26974 & 0.3039 & 0.27761 & 0.3001 \\
+reference_moderate & main & No-graph ablation & retrospective reconstruction & r2 & 20 & 0.18071 & 0.22525 & 0.21991 & 0.13792 & 0.32418 & 0.080115 & 0.27085 \\
+reference_moderate & main & No-graph ablation & retrospective reconstruction & pearson_r & 20 & 0.83615 & 0.084273 & 0.86216 & 0.79618 & 0.88838 & 0.79558 & 0.86793 \\
+reference_moderate & main & No-graph ablation & retrospective reconstruction & runtime_seconds & 20 & 9.2678 & 2.083 & 9.2322 & 8.3859 & 10.722 & 8.3835 & 10.175 \\
+reference_moderate & main & No-graph ablation & retrospective reconstruction & peak_memory_mb & 20 & 0.17559 & 0.67317 & 0 & 0 & 0 & 0 & 0.48941 \\
+reference_moderate & main & No-graph ablation & retrospective reconstruction & delay_mae & 20 & 1.3236 & 0.019413 & 1.3237 & 1.3117 & 1.3281 & 1.3158 & 1.3325 \\
+reference_moderate & main & No-robustness ablation & retrospective reconstruction & rmse & 20 & 0.68696 & 0.31155 & 0.55922 & 0.49755 & 0.71506 & 0.56814 & 0.83154 \\
+reference_moderate & main & No-robustness ablation & retrospective reconstruction & mae & 20 & 0.42827 & 0.086611 & 0.41395 & 0.3772 & 0.46926 & 0.39434 & 0.46681 \\
+reference_moderate & main & No-robustness ablation & retrospective reconstruction & r2 & 20 & -2.5772 & 3.6264 & -0.98311 & -2.289 & -0.56979 & -4.274 & -1.2151 \\
+reference_moderate & main & No-robustness ablation & retrospective reconstruction & pearson_r & 20 & 0.56895 & 0.17402 & 0.57548 & 0.4598 & 0.68569 & 0.48963 & 0.63786 \\
+reference_moderate & main & No-robustness ablation & retrospective reconstruction & runtime_seconds & 20 & 14.12 & 3.6624 & 13.885 & 12.607 & 16.071 & 12.608 & 15.725 \\
+reference_moderate & main & No-robustness ablation & retrospective reconstruction & peak_memory_mb & 20 & 0.17148 & 0.68137 & 0 & 0 & 0 & 0 & 0.48945 \\
+reference_moderate & main & No-robustness ablation & retrospective reconstruction & delay_mae & 20 & 1.3386 & 0.023658 & 1.3347 & 1.3218 & 1.3571 & 1.3289 & 1.3491 \\
+reference_moderate & main & Oracle timestamp interpolation & retrospective reconstruction & rmse & 20 & 1.8349 & 1.0341 & 1.5231 & 1.1377 & 2.1149 & 1.4391 & 2.3105 \\
+reference_moderate & main & Oracle timestamp interpolation & retrospective reconstruction & mae & 20 & 0.27558 & 0.10913 & 0.26655 & 0.19632 & 0.31252 & 0.23135 & 0.32487 \\
+reference_moderate & main & Oracle timestamp interpolation & retrospective reconstruction & r2 & 20 & -26.792 & 33.8 & -13.711 & -27.363 & -7.2199 & -42.849 & -14.185 \\
+reference_moderate & main & Oracle timestamp interpolation & retrospective reconstruction & pearson_r & 20 & 0.26753 & 0.13445 & 0.28124 & 0.17253 & 0.33786 & 0.20948 & 0.32531 \\
+reference_moderate & main & Oracle timestamp interpolation & retrospective reconstruction & runtime_seconds & 20 & 0.0076899 & 0.0048899 & 0.0065441 & 0.0052098 & 0.0082112 & 0.0061464 & 0.010149 \\
+reference_moderate & main & Oracle timestamp interpolation & retrospective reconstruction & peak_memory_mb & 20 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+reference_moderate & main & Original proposed ablation & retrospective reconstruction & rmse & 20 & 0.30973 & 0.051497 & 0.29329 & 0.27974 & 0.31619 & 0.28956 & 0.33333 \\
+reference_moderate & main & Original proposed ablation & retrospective reconstruction & mae & 20 & 0.24722 & 0.025809 & 0.24466 & 0.23223 & 0.26243 & 0.2365 & 0.25831 \\
+reference_moderate & main & Original proposed ablation & retrospective reconstruction & r2 & 20 & 0.37569 & 0.22807 & 0.45454 & 0.36604 & 0.50366 & 0.27132 & 0.46296 \\
+reference_moderate & main & Original proposed ablation & retrospective reconstruction & pearson_r & 20 & 0.82719 & 0.0634 & 0.84901 & 0.81614 & 0.86221 & 0.79587 & 0.84974 \\
+reference_moderate & main & Original proposed ablation & retrospective reconstruction & runtime_seconds & 20 & 15.029 & 2.6956 & 15.427 & 14.296 & 16.596 & 13.807 & 16.122 \\
+reference_moderate & main & Original proposed ablation & retrospective reconstruction & peak_memory_mb & 20 & 0.22773 & 0.76382 & 0 & 0 & 0.03125 & 0.01875 & 0.58945 \\
+reference_moderate & main & Original proposed ablation & retrospective reconstruction & delay_mae & 20 & 1.323 & 0.018861 & 1.3219 & 1.3111 & 1.3284 & 1.3153 & 1.3316 \\
+reference_moderate & main & Proposed revised & retrospective reconstruction & rmse & 20 & 0.31965 & 0.05148 & 0.31448 & 0.28184 & 0.33977 & 0.29888 & 0.34241 \\
+reference_moderate & main & Proposed revised & retrospective reconstruction & mae & 20 & 0.2615 & 0.035871 & 0.2658 & 0.23354 & 0.2901 & 0.24639 & 0.27651 \\
+reference_moderate & main & Proposed revised & retrospective reconstruction & r2 & 20 & 0.33609 & 0.22453 & 0.37285 & 0.26786 & 0.4963 & 0.23433 & 0.42384 \\
+reference_moderate & main & Proposed revised & retrospective reconstruction & pearson_r & 20 & 0.81825 & 0.067462 & 0.83472 & 0.80462 & 0.86503 & 0.78608 & 0.84317 \\
+reference_moderate & main & Proposed revised & retrospective reconstruction & runtime_seconds & 20 & 11.621 & 3.559 & 11.944 & 8.9458 & 13.061 & 10.106 & 13.194 \\
+reference_moderate & main & Proposed revised & retrospective reconstruction & peak_memory_mb & 20 & 0.17148 & 0.68137 & 0 & 0 & 0 & 0 & 0.48336 \\
+reference_moderate & main & Proposed revised & retrospective reconstruction & delay_mae & 20 & 1.3235 & 0.019572 & 1.3235 & 1.3116 & 1.3279 & 1.3156 & 1.3325 \\
+reference_moderate & main & Robust low-rank completion & retrospective reconstruction & rmse & 20 & 1.8058 & 0.72774 & 1.715 & 1.2846 & 2.2595 & 1.5065 & 2.1246 \\
+reference_moderate & main & Robust low-rank completion & retrospective reconstruction & mae & 20 & 0.58077 & 0.17294 & 0.5769 & 0.43557 & 0.71774 & 0.50929 & 0.65267 \\
+reference_moderate & main & Robust low-rank completion & retrospective reconstruction & r2 & 20 & -22.868 & 19.025 & -17.655 & -31.4 & -9.4656 & -31.796 & -15.386 \\
+reference_moderate & main & Robust low-rank completion & retrospective reconstruction & pearson_r & 20 & 0.24736 & 0.10748 & 0.24988 & 0.15384 & 0.29838 & 0.20312 & 0.29391 \\
+reference_moderate & main & Robust low-rank completion & retrospective reconstruction & runtime_seconds & 20 & 0.014324 & 0.0086813 & 0.010014 & 0.0090763 & 0.015173 & 0.011018 & 0.018407 \\
+reference_moderate & main & Robust low-rank completion & retrospective reconstruction & peak_memory_mb & 20 & 0.14629 & 0.19958 & 0 & 0 & 0.37695 & 0.065234 & 0.23203 \\
+reference_moderate & main & Robust median smoother & retrospective reconstruction & rmse & 20 & 0.66647 & 0.45447 & 0.49413 & 0.35145 & 0.80864 & 0.48724 & 0.86461 \\
+reference_moderate & main & Robust median smoother & retrospective reconstruction & mae & 20 & 0.19671 & 0.065731 & 0.18041 & 0.15044 & 0.23889 & 0.16973 & 0.22627 \\
+reference_moderate & main & Robust median smoother & retrospective reconstruction & r2 & 20 & -3.0609 & 5.7134 & -0.55741 & -3.2978 & 0.2159 & -5.6922 & -0.97733 \\
+reference_moderate & main & Robust median smoother & retrospective reconstruction & pearson_r & 20 & 0.57161 & 0.21817 & 0.61575 & 0.40189 & 0.76587 & 0.47568 & 0.66228 \\
+reference_moderate & main & Robust median smoother & retrospective reconstruction & runtime_seconds & 20 & 0.0079646 & 0.0052573 & 0.0063114 & 0.005276 & 0.0080025 & 0.006218 & 0.010516 \\
+reference_moderate & main & Robust median smoother & retrospective reconstruction & peak_memory_mb & 20 & 0.025391 & 0.066042 & 0 & 0 & 0 & 0 & 0.057031 \\
+\bottomrule
+\end{tabular}
+}
+\end{table}

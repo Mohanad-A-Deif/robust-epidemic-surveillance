@@ -1,0 +1,79 @@
+{
+  "dataset_name": "RKI_fixture_test",
+  "source": {
+    "publisher": "Robert Koch Institute (RKI)",
+    "file_name": "rki_fixture.csv",
+    "download_url": "",
+    "md5": "",
+    "license": "CC BY 4.0"
+  },
+  "selected_states": [
+    "Baden-Württemberg",
+    "Bayern"
+  ],
+  "date_start": "2020-02-20",
+  "date_end": "2020-02-22",
+  "aggregate_age_groups": true,
+  "fill_missing_zero": false,
+  "transform": {
+    "primary": "incidence_per_100k_then_log1p",
+    "standard_deviation_floor": 1e-08
+  },
+  "split": {
+    "train_fraction": 0.6,
+    "validation_fraction": 0.2,
+    "test_fraction": 0.2
+  },
+  "nodes": [
+    {
+      "node_id": 0,
+      "code": "BW",
+      "state": "Baden-Württemberg",
+      "slice_id": "critical"
+    },
+    {
+      "node_id": 1,
+      "code": "BY",
+      "state": "Bayern",
+      "slice_id": "standard"
+    }
+  ],
+  "undirected_reference_edges": [
+    [
+      "BW",
+      "BY"
+    ]
+  ],
+  "scenario_generation": {
+    "seeds": [
+      42
+    ],
+    "outlier_scale": 4.0,
+    "critical_zero_delay_bonus": 0.1,
+    "critical_drop_multiplier": 0.75,
+    "scenarios": [
+      {
+        "name": "fixture_scenario",
+        "family": "test",
+        "max_delay": 2,
+        "delay_pmf": [
+          0.5,
+          0.3,
+          0.2
+        ],
+        "drop_probability": 0.2,
+        "outlier_probability": 0.25
+      }
+    ],
+    "template_version": "nested_independent_streams_v1"
+  },
+  "population": {
+    "reference_date": "2020-12-31",
+    "source": "offline fixture constants",
+    "unit": "persons",
+    "values": {
+      "Baden-Württemberg": 100000,
+      "Bayern": 200000
+    }
+  }
+}

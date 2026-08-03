@@ -1,0 +1,27 @@
+\begin{table}[!htbp]
+\centering
+\caption{One-factor-at-a-time sensitivity using nested seed-level corruption templates.}
+\label{tab:sensitivity}
+\resizebox{\linewidth}{!}{%
+\begin{tabular}{llrrrrrr}
+\toprule
+family & scenario & n_seeds & rmse_mean & rmse_sd & mae_mean & runtime_mean & learned_density_mean \\
+\midrule
+delay & delay_light & 20 & 0.31046 & 0.066095 & 0.25301 & 26.645 & 0.285 \\
+delay & delay_moderate & 20 & 0.31965 & 0.05148 & 0.2615 & 31.59 & 0.27833 \\
+delay & delay_severe & 20 & 0.34398 & 0.086006 & 0.2735 & 35.155 & 0.265 \\
+main & reference_moderate & 20 & 0.31965 & 0.05148 & 0.2615 & 25.967 & 0.27833 \\
+missingness & missing_00 & 20 & 0.29988 & 0.04378 & 0.24749 & 30.194 & 0.26667 \\
+missingness & missing_10 & 20 & 0.31965 & 0.05148 & 0.2615 & 26.446 & 0.27833 \\
+missingness & missing_30 & 20 & 0.41321 & 0.1875 & 0.30845 & 22.085 & 0.26667 \\
+missingness & missing_50 & 20 & 0.61467 & 0.55219 & 0.39406 & 17.952 & 0.28167 \\
+model_mismatch & prior_mismatch & 20 & 0.32709 & 0.079385 & 0.25931 & 27.002 & 0.265 \\
+outlier & outlier_00 & 20 & 0.21242 & 0.0029762 & 0.17367 & 28.754 & 0.43167 \\
+outlier & outlier_05 & 20 & 0.31965 & 0.05148 & 0.2615 & 25.689 & 0.27833 \\
+outlier & outlier_10 & 20 & 0.39503 & 0.087334 & 0.31216 & 27.585 & 0.23667 \\
+outlier & outlier_20 & 20 & 0.52695 & 0.098216 & 0.4018 & 28.432 & 0.23667 \\
+outlier & outlier_30 & 20 & 0.65703 & 0.094496 & 0.49234 & 26.177 & 0.22333 \\
+\bottomrule
+\end{tabular}
+}
+\end{table}

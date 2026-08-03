@@ -1,0 +1,16 @@
+scenario,method,average_rank,rank_std
+reference_moderate,No-delay ablation,2.45,1.5719582155957412
+reference_moderate,Known-delay proposed oracle,2.6,1.6982963599783722
+reference_moderate,Original proposed ablation,3.25,1.51744244666721
+reference_moderate,Proposed revised,3.8,1.1516578439248717
+reference_moderate,Fixed geographic graph,4.1,1.618966531951463
+reference_moderate,No-graph ablation,5.65,1.089422831256605
+reference_moderate,Robust median smoother,7.25,2.7886046312580213
+reference_moderate,No-robustness ablation,8.45,1.3168942730211068
+reference_moderate,Kalman/RTS smoother (internal),8.65,1.089422831256605
+reference_moderate,Delay-aware state-space (internal),9.1,0.9679060415469871
+reference_moderate,Graph-temporal reconstruction,11.2,0.8335087534664907
+reference_moderate,Delay backprojection,11.5,0.6069769786668839
+reference_moderate,Arrival interpolation,13.25,0.5501196042201808
+reference_moderate,Oracle timestamp interpolation,14.3,0.8013147091860318
+reference_moderate,Robust low-rank completion,14.45,0.5104177855340405

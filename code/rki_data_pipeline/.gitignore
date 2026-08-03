@@ -1,0 +1,12 @@
+.venv/
+__pycache__/
+*.pyc
+data/raw/*.csv
+data/processed/*
+data/scenarios/*
+!data/processed/.gitkeep
+!data/scenarios/.gitkeep
+tests/out/
+tests/raw/
+tests/scenarios/
+tests/metadata/

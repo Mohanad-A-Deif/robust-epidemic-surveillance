@@ -1,0 +1,6 @@
+{
+  "interpretation": "Empirical uncertainty across fixed corruption seeds, not a Bayesian posterior interval.",
+  "interval_coverage_95": 0.8082191780821918,
+  "interval_mean_width": 0.7252126984424768,
+  "winkler_score_95": 1.5304162925169424
+}

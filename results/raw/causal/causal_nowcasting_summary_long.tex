@@ -1,0 +1,55 @@
+\begin{table}[!htbp]
+\centering
+\caption{Seed-level summary with bootstrap 95% confidence intervals.}
+\label{tab:causal_nowcasting_summary}
+\resizebox{\linewidth}{!}{%
+\begin{tabular}{lllllrrrrrrrr}
+\toprule
+scenario & family & method & evaluation & metric & n & mean & std & median & q1 & q3 & ci95_low & ci95_high \\
+\midrule
+reference_moderate & main & Arrival interpolation & causal rolling nowcasting & rmse & 20 & 1.4427 & 0.60822 & 1.2276 & 1.0032 & 1.8433 & 1.1955 & 1.6971 \\
+reference_moderate & main & Arrival interpolation & causal rolling nowcasting & mae & 20 & 0.34814 & 0.083328 & 0.32452 & 0.28332 & 0.43068 & 0.31343 & 0.38495 \\
+reference_moderate & main & Arrival interpolation & causal rolling nowcasting & r2 & 20 & -14.426 & 13.123 & -8.5578 & -20.574 & -5.3826 & -20.093 & -9.3554 \\
+reference_moderate & main & Arrival interpolation & causal rolling nowcasting & pearson_r & 20 & 0.28904 & 0.12856 & 0.27502 & 0.20223 & 0.36511 & 0.23439 & 0.34511 \\
+reference_moderate & main & Arrival interpolation & causal rolling nowcasting & runtime_seconds & 20 & 0.65268 & 0.24667 & 0.63027 & 0.55615 & 0.66944 & 0.55132 & 0.76598 \\
+reference_moderate & main & Arrival interpolation & causal rolling nowcasting & peak_memory_mb & 20 & 0.05625 & 0.25156 & 0 & 0 & 0 & 0 & 0.16875 \\
+reference_moderate & main & Delay backprojection & causal rolling nowcasting & rmse & 20 & 1.4427 & 0.60822 & 1.2276 & 1.0032 & 1.8433 & 1.1955 & 1.6971 \\
+reference_moderate & main & Delay backprojection & causal rolling nowcasting & mae & 20 & 0.34814 & 0.083328 & 0.32452 & 0.28332 & 0.43068 & 0.31343 & 0.38495 \\
+reference_moderate & main & Delay backprojection & causal rolling nowcasting & r2 & 20 & -14.426 & 13.123 & -8.5578 & -20.574 & -5.3826 & -20.093 & -9.3554 \\
+reference_moderate & main & Delay backprojection & causal rolling nowcasting & pearson_r & 20 & 0.28904 & 0.12856 & 0.27502 & 0.20223 & 0.36511 & 0.23439 & 0.34511 \\
+reference_moderate & main & Delay backprojection & causal rolling nowcasting & runtime_seconds & 20 & 3.0294 & 0.69606 & 3.1772 & 2.8171 & 3.2665 & 2.73 & 3.3238 \\
+reference_moderate & main & Delay backprojection & causal rolling nowcasting & peak_memory_mb & 20 & 0.025 & 0.1118 & 0 & 0 & 0 & 0 & 0.075 \\
+reference_moderate & main & Delay-aware state-space (internal) & causal rolling nowcasting & rmse & 20 & 1.0343 & 0.41433 & 0.87591 & 0.74166 & 1.2767 & 0.86593 & 1.213 \\
+reference_moderate & main & Delay-aware state-space (internal) & causal rolling nowcasting & mae & 20 & 0.36985 & 0.081044 & 0.36232 & 0.31235 & 0.4256 & 0.33615 & 0.40506 \\
+reference_moderate & main & Delay-aware state-space (internal) & causal rolling nowcasting & r2 & 20 & -6.8184 & 6.1712 & -3.8654 & -9.5781 & -2.4927 & -9.4781 & -4.3615 \\
+reference_moderate & main & Delay-aware state-space (internal) & causal rolling nowcasting & pearson_r & 20 & 0.38151 & 0.15194 & 0.40274 & 0.30173 & 0.48078 & 0.31473 & 0.4453 \\
+reference_moderate & main & Delay-aware state-space (internal) & causal rolling nowcasting & runtime_seconds & 20 & 2.8412 & 0.98189 & 2.9625 & 1.9367 & 3.6482 & 2.4152 & 3.2793 \\
+reference_moderate & main & Delay-aware state-space (internal) & causal rolling nowcasting & peak_memory_mb & 20 & 0.038867 & 0.11667 & 0 & 0 & 0 & 0 & 0.096484 \\
+reference_moderate & main & Kalman/RTS smoother (internal) & causal rolling nowcasting & rmse & 20 & 0.86829 & 0.3006 & 0.79451 & 0.67789 & 1.0529 & 0.7448 & 0.99504 \\
+reference_moderate & main & Kalman/RTS smoother (internal) & causal rolling nowcasting & mae & 20 & 0.37507 & 0.077142 & 0.37726 & 0.3246 & 0.43383 & 0.34221 & 0.40754 \\
+reference_moderate & main & Kalman/RTS smoother (internal) & causal rolling nowcasting & r2 & 20 & -4.3252 & 3.5781 & -3.0044 & -6.05 & -1.9212 & -5.8768 & -2.8775 \\
+reference_moderate & main & Kalman/RTS smoother (internal) & causal rolling nowcasting & pearson_r & 20 & 0.4263 & 0.16493 & 0.46263 & 0.33576 & 0.53882 & 0.35411 & 0.49545 \\
+reference_moderate & main & Kalman/RTS smoother (internal) & causal rolling nowcasting & runtime_seconds & 20 & 1.0854 & 0.42574 & 1.1059 & 0.72919 & 1.2443 & 0.91444 & 1.2757 \\
+reference_moderate & main & Kalman/RTS smoother (internal) & causal rolling nowcasting & peak_memory_mb & 20 & 0.09375 & 0.28061 & 0 & 0 & 0 & 0 & 0.23125 \\
+reference_moderate & main & Oracle timestamp interpolation & causal rolling nowcasting & rmse & 20 & 1.7764 & 1.2848 & 1.2944 & 0.99216 & 1.9413 & 1.2889 & 2.3642 \\
+reference_moderate & main & Oracle timestamp interpolation & causal rolling nowcasting & mae & 20 & 0.34426 & 0.15125 & 0.28559 & 0.24104 & 0.43672 & 0.28342 & 0.41114 \\
+reference_moderate & main & Oracle timestamp interpolation & causal rolling nowcasting & r2 & 20 & -28.955 & 48.755 & -9.6556 & -23.05 & -5.247 & -51.976 & -11.526 \\
+reference_moderate & main & Oracle timestamp interpolation & causal rolling nowcasting & pearson_r & 20 & 0.27515 & 0.13877 & 0.26353 & 0.20073 & 0.36146 & 0.21483 & 0.33451 \\
+reference_moderate & main & Oracle timestamp interpolation & causal rolling nowcasting & runtime_seconds & 20 & 0.57513 & 0.19938 & 0.62658 & 0.4114 & 0.69106 & 0.49524 & 0.6611 \\
+reference_moderate & main & Oracle timestamp interpolation & causal rolling nowcasting & peak_memory_mb & 20 & 0.05625 & 0.25156 & 0 & 0 & 0 & 0 & 0.16875 \\
+reference_moderate & main & Proposed revised & causal rolling nowcasting & rmse & 20 & 1.0857 & 0.037632 & 1.0857 & 1.0723 & 1.1052 & 1.069 & 1.1007 \\
+reference_moderate & main & Proposed revised & causal rolling nowcasting & mae & 20 & 1.0661 & 0.035587 & 1.0663 & 1.0534 & 1.0884 & 1.0503 & 1.0802 \\
+reference_moderate & main & Proposed revised & causal rolling nowcasting & r2 & 20 & -6.4828 & 0.51295 & -6.4755 & -6.7463 & -6.291 & -6.6904 & -6.2565 \\
+reference_moderate & main & Proposed revised & causal rolling nowcasting & pearson_r & 20 & 0.86949 & 0.0496 & 0.88699 & 0.8632 & 0.89808 & 0.84583 & 0.88802 \\
+reference_moderate & main & Proposed revised & causal rolling nowcasting & runtime_seconds & 20 & 131.9 & 22.733 & 137.58 & 125.31 & 143.21 & 121.72 & 140.88 \\
+reference_moderate & main & Proposed revised & causal rolling nowcasting & peak_memory_mb & 20 & 0.69629 & 0.45909 & 0.5 & 0.375 & 0.9375 & 0.52246 & 0.91035 \\
+reference_moderate & main & Robust median smoother & causal rolling nowcasting & rmse & 20 & 1.4427 & 0.60822 & 1.2276 & 1.0032 & 1.8433 & 1.1955 & 1.6971 \\
+reference_moderate & main & Robust median smoother & causal rolling nowcasting & mae & 20 & 0.34814 & 0.083328 & 0.32452 & 0.28332 & 0.43068 & 0.31343 & 0.38495 \\
+reference_moderate & main & Robust median smoother & causal rolling nowcasting & r2 & 20 & -14.426 & 13.123 & -8.5578 & -20.574 & -5.3826 & -20.093 & -9.3554 \\
+reference_moderate & main & Robust median smoother & causal rolling nowcasting & pearson_r & 20 & 0.28904 & 0.12856 & 0.27502 & 0.20223 & 0.36511 & 0.23439 & 0.34511 \\
+reference_moderate & main & Robust median smoother & causal rolling nowcasting & runtime_seconds & 20 & 0.56602 & 0.16509 & 0.61196 & 0.38807 & 0.67823 & 0.49347 & 0.63558 \\
+reference_moderate & main & Robust median smoother & causal rolling nowcasting & peak_memory_mb & 20 & 0.07168 & 0.19604 & 0 & 0 & 0 & 0 & 0.16641 \\
+\bottomrule
+\end{tabular}
+}
+\end{table}

@@ -1,0 +1,36 @@
+{
+  "scenario": "outlier_05",
+  "family": "outlier",
+  "seed": 1114,
+  "template_sha256": "fbbacd6016490327df227046affd0969bea999fe2d013212fd1ff8ad54835b83",
+  "n_generated": 2190,
+  "n_received": 1984,
+  "n_dropped": 199,
+  "n_right_censored": 7,
+  "n_outliers_received": 101,
+  "realized_drop_fraction": 0.0908675799086758,
+  "realized_received_fraction": 0.9059360730593607,
+  "realized_outlier_fraction_among_received": 0.05090725806451613,
+  "mean_delay_all_generated": 1.5584474885844748,
+  "mean_delay_received": 1.5630040322580645,
+  "rows_participating_in_same_node_same_arrival_collisions": 1089,
+  "generation_delay_pmf_base": [
+    0.3,
+    0.25,
+    0.18,
+    0.12,
+    0.08,
+    0.05,
+    0.02
+  ],
+  "inference_delay_pmf_base": [
+    0.3,
+    0.25,
+    0.18,
+    0.12,
+    0.08,
+    0.05,
+    0.02
+  ],
+  "nested_sweep_note": "Delay, drop, outlier-selection, and outlier-magnitude random templates are fixed per seed and reused across scenarios."
+}

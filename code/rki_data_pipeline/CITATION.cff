@@ -1,0 +1,19 @@
+cff-version: 1.2.0
+message: "Please cite both this reproducibility package and the underlying RKI dataset."
+title: "RKI Semi-Real Epidemic Surveillance Reproducibility Package"
+type: software
+authors:
+  - name: "Manuscript authors"
+version: 1.0.0
+date-released: 2026-07-21
+license: MIT
+references:
+  - type: dataset
+    title: "StopptCOVID-Studie - Daten, Analyse und Ergebnisse"
+    authors:
+      - family-names: Hicketier
+        given-names: Andreas
+      - family-names: an der Heiden
+        given-names: Matthias
+    year: 2024
+    doi: 10.5281/zenodo.10888033

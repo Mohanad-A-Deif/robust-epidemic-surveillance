@@ -1,0 +1,405 @@
+% ============================================================================
+% Replacement text for the previous Results, Discussion,
+% Limitations and Future Work, and Conclusion sections.
+% All numerical values below were obtained from the revised executable pipeline.
+% ============================================================================
+
+\section{Results}
+\label{sec:results}
+
+\subsection{Characteristics of the Semi-Real RKI Benchmark}
+\label{subsec:rki_characteristics}
+
+The empirical evaluation uses real regional epidemic trajectories derived from the RKI symptom-onset expected-count dataset. The daily state-level case counts were converted to incidence per $100{,}000$ population and then transformed as $\log(1+\mathrm{incidence})$, as defined in Sec.~\ref{sec:exp_setup}. Missing reports, transport delays, and outliers were subsequently injected through fixed corruption templates. Accordingly, the epidemic trajectories are real, whereas the communication impairments are controlled semi-real perturbations and must not be interpreted as measured RKI reporting delays.
+
+Figure~\ref{fig:rki_trajectories} shows the transformed trajectories used in the study. The states share broad epidemic waves but differ in peak magnitude and local timing. The correlation structure in Fig.~\ref{fig:rki_correlation} confirms substantial co-movement among several regional series. This shared temporal structure is helpful for graph-temporal reconstruction, but it also creates an identifiability challenge because highly correlated nodes can be explained by multiple directed graphs with similar state-fitting error.
+
+\begin{figure}[!htbp]
+    \centering
+    \includegraphics[width=0.95\linewidth]{figures/fig_rki_trajectories.png}
+    \caption{Real RKI epidemic trajectories used in the semi-real experiments after conversion to incidence per $100{,}000$ population and application of the $\log(1+x)$ transformation. Communication missingness, delays, and outliers are injected separately and are not measured RKI transport impairments. State abbreviations are defined in the caption or accompanying data description.}
+    \label{fig:rki_trajectories}
+\end{figure}
+
+\begin{figure}[!htbp]
+    \centering
+    \includegraphics[width=0.72\linewidth]{figures/fig_correlation_heatmap.png}
+    \caption{Correlation structure of the transformed RKI regional epidemic trajectories. Strong regional co-movement supports shared-information reconstruction but limits unique identification of directed propagation edges.}
+    \label{fig:rki_correlation}
+\end{figure}
+
+\subsection{Validation-Based Configuration Selection}
+\label{subsec:validation_selection}
+
+All model choices were completed before opening the test interval. Across five validation corruption seeds, the selected configuration used $\sigma_w=0.25$ and achieved a mean validation RMSE of $0.475$ with SD $0.174$. The default configuration produced a mean validation RMSE of $0.484$ with SD $0.221$. The improvement was therefore modest rather than decisive. Nevertheless, the selected configuration was frozen because it had the lowest validation mean under the predeclared selection rule. No test result was used to select the state-noise scale, delay-posterior temperature, regularization weights, graph threshold, stopping criteria, or model configuration.
+
+\subsection{Retrospective Reconstruction on the Locked Test Interval}
+\label{subsec:retrospective_results}
+
+Table~\ref{tab:reference} summarizes retrospective reconstruction, in which all messages available by the end of the study window may contribute to reconstruction of the historical latent trajectory. This task is distinct from real-time nowcasting and should be interpreted as retrospective recovery or audit of a corrupted epidemic history.
+
+\begin{table}[!htbp]
+\centering
+\caption{Retrospective reconstruction on the locked semi-real test interval over 20 paired corruption seeds. Lower values are better for RMSE, MAE, and runtime; higher values are better for Pearson correlation.}
+\label{tab:reference}
+\small
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{lrrrr}
+\toprule
+Method & RMSE (mean $\pm$ SD) & MAE & Pearson $r$ & Runtime (s) \\
+\midrule
+No-delay ablation & \textbf{0.301 $\pm$ 0.051} & 0.244 & 0.819 & 14.231 \\
+Original proposed & 0.310 $\pm$ 0.051 & 0.247 & 0.827 & 15.029 \\
+Proposed revised & 0.320 $\pm$ 0.051 & 0.261 & 0.818 & 11.621 \\
+Fixed geographic graph & 0.323 $\pm$ 0.024 & 0.268 & 0.878 & 8.328 \\
+Known-delay oracle & 0.326 $\pm$ 0.122 & 0.249 & 0.807 & 13.228 \\
+No-graph ablation & 0.357 $\pm$ 0.047 & 0.289 & 0.836 & 9.268 \\
+Robust median & 0.666 $\pm$ 0.454 & \textbf{0.197} & 0.572 & 0.008 \\
+No-robustness ablation & 0.687 $\pm$ 0.312 & 0.428 & 0.569 & 14.120 \\
+Kalman/RTS (internal) & 0.687 $\pm$ 0.242 & 0.340 & 0.511 & 0.013 \\
+Delay-aware SSM (internal) & 0.727 $\pm$ 0.298 & 0.347 & 0.507 & 0.036 \\
+Graph-temporal reconstruction & 1.010 $\pm$ 0.409 & 0.306 & 0.383 & 0.009 \\
+Delay backprojection & 1.020 $\pm$ 0.454 & 0.366 & 0.403 & 0.039 \\
+Arrival interpolation & 1.358 $\pm$ 0.558 & 0.346 & 0.309 & 0.009 \\
+Robust low-rank completion & 1.806 $\pm$ 0.728 & 0.581 & 0.247 & 0.014 \\
+Timestamp oracle interpolation & 1.835 $\pm$ 1.034 & 0.276 & 0.268 & 0.008 \\
+\bottomrule
+\end{tabular}}
+\begin{minipage}{0.98\textwidth}\footnotesize RMSE and MAE are computed on the $\log(1+\mathrm{incidence}/100{,}000)$ scale. ``Oracle'' denotes access to an otherwise unavailable timing or graph quantity; it is not necessarily an accuracy upper bound when the reconstruction rule itself is simple interpolation. Methods marked ``internal'' are simplified study implementations rather than exact reproductions of a named published package.\end{minipage}
+\end{table}
+
+The revised proposed method achieved RMSE $0.320\pm0.051$, MAE $0.261$, and Pearson correlation $0.818$. It substantially outperformed arrival interpolation, delay backprojection, graph-temporal reconstruction, robust low-rank completion, the simplified Kalman/RTS and delay-aware state-space baselines, the no-robustness ablation, and the no-graph ablation. In particular, the comparison with the no-robustness ablation supports the use of a robust observation loss under contaminated reporting, while the comparison with the no-graph ablation indicates that structured cross-regional coupling can improve retrospective state recovery.
+
+However, the no-delay ablation attained the lowest mean RMSE, $0.301\pm0.051$, followed by the original proposed ablation at $0.310\pm0.051$. The fixed geographic graph model was also close to the revised method, with RMSE $0.323\pm0.024$. Paired testing did not support a difference between the revised method and these nearby alternatives after Holm correction: the revised-versus-no-delay Wilcoxon adjusted $p$-value was $0.106$, the revised-versus-original adjusted values were $1.000$, and the revised-versus-fixed-geography adjusted values were $1.000$. Therefore, the retrospective experiment supports competitive and robust reconstruction, but not a claim of uniform superiority over all closely related variants.
+
+The robust median smoother provides an instructive metric contrast. It obtained the lowest mean MAE ($0.197$) but a much larger RMSE ($0.666$), indicating generally small pointwise deviations combined with occasional large failures. For this reason, both RMSE and MAE are retained rather than reducing the evaluation to a single error measure. Similarly, timestamp oracle interpolation performed poorly because exact generation timestamps alone do not compensate for the limitations of a simple interpolation rule; ``oracle'' in that baseline refers only to timestamp knowledge.
+
+\begin{figure}[!htbp]
+    \centering
+    \includegraphics[width=0.94\linewidth]{figures/fig_reference_benchmark.png}
+    \caption{Retrospective test RMSE with bootstrap 95\% confidence intervals over 20 paired corruption seeds. The no-delay, original, revised, and fixed-geography variants form a closely performing group, whereas several simpler external baselines exhibit substantially larger error.}
+    \label{fig:reference_benchmark}
+\end{figure}
+
+\begin{figure}[!htbp]
+    \centering
+    \includegraphics[width=0.80\linewidth]{figures/fig_runtime_accuracy.png}
+    \caption{Runtime--accuracy trade-off for retrospective reconstruction. Runtime is shown on a logarithmic axis. Fast interpolation and linear-state baselines have lower computational cost, whereas the alternating graph-learning methods incur a larger optimization burden.}
+    \label{fig:runtime_accuracy}
+\end{figure}
+
+\subsection{Paired Statistical Comparisons and Average Ranks}
+\label{subsec:statistical_results}
+
+The overall retrospective method comparison was significant under the Friedman test ($\chi^2_F=254.64$, $p=3.15\times10^{-46}$; 20 paired corruption seeds and 15 methods). The no-delay ablation had the best average rank (2.45), followed by the known-delay proposed oracle (2.60), the original proposed ablation (3.25), the revised proposed method (3.80), and the fixed geographic graph (4.10). The ranking confirms that the revised method belongs to the leading group, while the corrected pairwise tests prevent overinterpreting the small numerical differences within that group.
+
+The significance matrix in Fig.~\ref{fig:significance_matrix} reports Holm-adjusted paired comparisons. The revised method showed statistically supported improvements over several weaker comparators, including no-graph and no-robustness, but not over no-delay, the original ablation, or the fixed geographic graph. Figure~\ref{fig:average_ranks} complements the pairwise analysis by displaying performance ranks across matched seeds. These two views are reported together because mean rankings alone do not identify which individual contrasts remain supported after multiplicity correction.
+
+\begin{figure}[!htbp]
+    \centering
+    \includegraphics[width=0.88\linewidth]{figures/fig_significance_matrix.png}
+    \caption{Holm-corrected pairwise significance matrix for retrospective RMSE. Statistical claims are based on paired seeds; scenario levels are not treated as independent replicates.}
+    \label{fig:significance_matrix}
+\end{figure}
+
+\begin{figure}[!htbp]
+    \centering
+    \includegraphics[width=0.82\linewidth]{figures/fig_average_ranks.png}
+    \caption{Average retrospective RMSE ranks across 20 matched corruption seeds. Lower rank is better. The revised method is competitive but does not hold the best average rank.}
+    \label{fig:average_ranks}
+\end{figure}
+
+\subsection{Causal Rolling Nowcasting}
+\label{subsec:causal_results}
+
+Table~\ref{tab:causal} reports the separate causal rolling-nowcasting experiment. At evaluation day $t$, a method was allowed to use only messages that had arrived by day $t$; future arrivals and end-of-window information were excluded. This protocol is consequently more demanding than retrospective reconstruction and directly evaluates the ability to estimate the current epidemic state from the information actually available at that time.
+
+\begin{table}[!htbp]
+\centering
+\caption{Causal rolling nowcasting on the locked semi-real test interval over 20 paired corruption seeds.}
+\label{tab:causal}
+\small
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{lrrrr}
+\toprule
+Method & RMSE (mean $\pm$ SD) & MAE & Pearson $r$ & Runtime (s) \\
+\midrule
+Kalman/RTS (internal) & \textbf{0.868 $\pm$ 0.301} & 0.375 & 0.426 & 1.085 \\
+Delay-aware SSM (internal) & 1.034 $\pm$ 0.414 & 0.370 & 0.382 & 2.841 \\
+Proposed revised & 1.086 $\pm$ 0.038 & 1.066 & \textbf{0.869} & 131.903 \\
+Delay backprojection & 1.443 $\pm$ 0.608 & 0.348 & 0.289 & 3.029 \\
+Arrival interpolation & 1.443 $\pm$ 0.608 & 0.348 & 0.289 & 0.653 \\
+Robust median & 1.443 $\pm$ 0.608 & 0.348 & 0.289 & 0.566 \\
+Timestamp oracle interpolation & 1.776 $\pm$ 1.285 & 0.344 & 0.275 & 0.575 \\
+\bottomrule
+\end{tabular}}
+\begin{minipage}{0.98\textwidth}\footnotesize RMSE and MAE are reported on the transformed-incidence scale. The rolling proposed method repeatedly refits the model using only causally available messages, which explains its substantially larger runtime.\end{minipage}
+\end{table}
+
+The simplified Kalman/RTS smoother had the lowest mean causal RMSE ($0.868\pm0.301$), followed by the delay-aware state-space baseline ($1.034\pm0.414$) and the revised proposed method ($1.086\pm0.038$). The mean difference favored Kalman/RTS, with a moderate-to-large paired effect ($d_z=-0.713$ when expressed as Kalman minus Proposed), although the Wilcoxon comparison narrowly failed to remain significant after Holm correction ($p_{\mathrm{Holm}}=0.061$). The Friedman test nevertheless confirmed overall differences among the seven methods ($\chi^2_F=66.17$, $p=2.49\times10^{-12}$), and Kalman/RTS had the best average rank (1.30), compared with 2.55 for the delay-aware state-space baseline and 3.70 for the revised proposed method.
+
+The proposed method presents a notable discrepancy between correlation and absolute error. It achieved the highest mean Pearson correlation ($0.869$), showing that it followed the temporal shape of the epidemic trajectory, but its MAE was $1.066$, almost three times that of the Kalman/RTS and delay-aware state-space baselines. This combination indicates a level or scale bias: the method often captured when the trajectory increased or decreased while underestimating or mis-scaling the current magnitude. This is a substantive nowcasting failure rather than a cosmetic disagreement among metrics. In addition, its mean rolling runtime was approximately $132$ s, compared with 1--3 s for the simplified state-space alternatives. Consequently, the present results do not justify a real-time or deployment-readiness claim.
+
+\begin{figure}[!htbp]
+    \centering
+    \includegraphics[width=0.94\linewidth]{figures/fig_causal_benchmark.png}
+    \caption{Causal rolling-nowcasting RMSE. At day $t$, only messages received by day $t$ were available. The revised method preserves temporal correlation but exhibits larger magnitude error and substantially higher runtime than the leading state-space baselines.}
+    \label{fig:causal_benchmark}
+\end{figure}
+
+\subsection{Sensitivity to Missingness, Delay, Outliers, and Prior Misspecification}
+\label{subsec:robustness_results}
+
+The robustness experiments use nested corruption templates so that only one factor changes within each sweep and the same seeds remain paired across methods and severity levels. Table~\ref{tab:robustness} reports mean RMSE for the revised method and its two principal ablations, together with the lowest-RMSE method among all evaluated comparators in each scenario.
+
+\begin{table}[!htbp]
+\centering
+\caption{Robustness and corruption sensitivity over 20 paired seeds. Lower RMSE is better.}
+\label{tab:robustness}
+\small
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{lrrrl}
+\toprule
+Scenario & Proposed & No delay & No robustness & Lowest-RMSE method \\
+\midrule
+Missing 0\% & 0.300 & \textbf{0.282} & 0.674 & No-delay ablation (0.282) \\
+Missing 10\% & 0.320 & \textbf{0.301} & 0.687 & No-delay ablation (0.301) \\
+Missing 30\% & 0.413 & \textbf{0.394} & 0.753 & No-delay ablation (0.394) \\
+Missing 50\% & \textbf{0.615} & 0.638 & 0.898 & Proposed revised (0.615) \\
+Delay: light & 0.310 & \textbf{0.309} & 0.655 & No-delay ablation (0.309) \\
+Delay: moderate & 0.320 & \textbf{0.301} & 0.687 & No-delay ablation (0.301) \\
+Delay: severe & 0.344 & \textbf{0.339} & 0.734 & No-delay ablation (0.339) \\
+Outliers 0\% & 0.212 & 0.200 & 0.212 & Delay backprojection (0.089) \\
+Outliers 5\% & 0.320 & \textbf{0.301} & 0.687 & No-delay ablation (0.301) \\
+Outliers 10\% & 0.395 & \textbf{0.367} & 0.903 & No-delay ablation (0.367) \\
+Outliers 20\% & 0.527 & \textbf{0.491} & 1.261 & No-delay ablation (0.491) \\
+Outliers 30\% & 0.657 & \textbf{0.600} & 1.540 & No-delay ablation (0.600) \\
+Delay-prior mismatch & \textbf{0.327} & 0.346 & 0.700 & Proposed revised (0.327) \\
+\bottomrule
+\end{tabular}}
+\begin{minipage}{0.98\textwidth}\footnotesize The lowest-RMSE method is selected from every method evaluated in the corresponding scenario, not only the three displayed numeric columns. The scenarios use fixed nested corruption templates, so changing one factor does not resample the locations of the other corruption types.\end{minipage}
+\end{table}
+
+For missingness, the revised method degraded from RMSE $0.300$ with no missing reports to $0.615$ at 50\% missingness. The no-delay ablation had slightly lower error at 0--30\% missingness, whereas the revised method became best at 50\%. This suggests that delay-aware robust coupling becomes most useful when the observation pattern is sufficiently sparse, but its additional estimation uncertainty is not automatically beneficial at mild and moderate missingness.
+
+Delay severity had a comparatively modest effect on the revised model: mean RMSE increased from $0.310$ under light delays to $0.344$ under severe delays. Nevertheless, the no-delay ablation remained slightly better within this stationary-delay sweep. By contrast, under delay-prior mismatch, the revised model achieved RMSE $0.327$, compared with $0.346$ for no-delay and $0.700$ for no-robustness. The tempered posterior and robust formulation therefore provided value when the assumed delay law was imperfect, even though explicit delay marginalization did not yield a uniform gain under the nominal stationary profiles.
+
+Outlier sensitivity confirms the contribution of the robust loss. The no-robustness ablation increased from RMSE $0.212$ without outliers to $1.540$ at 30\% contamination, whereas the revised method increased to $0.657$. The no-delay ablation remained numerically better than the full model at positive outlier levels, but both robust variants substantially outperformed the quadratic no-robustness model. Thus, the evidence supports robustness to contamination as an important component, while the incremental benefit of delay inference depends on the missingness and delay regime.
+
+\begin{figure}[!htbp]
+    \centering
+    \includegraphics[width=0.60\linewidth]{figures/fig_missingness_sensitivity.png}
+    \caption{Missingness sensitivity of the revised method. Error bars show one SD across 20 paired corruption seeds.}
+    \label{fig:missingness_sensitivity}
+\end{figure}
+
+\begin{figure}[!htbp]
+    \centering
+    \includegraphics[width=0.60\linewidth]{figures/fig_delay_sensitivity.png}
+    \caption{Delay-severity sensitivity of the revised method under fixed maximum-delay support and nested corruption templates.}
+    \label{fig:delay_sensitivity}
+\end{figure}
+
+\begin{figure}[!htbp]
+    \centering
+    \includegraphics[width=0.60\linewidth]{figures/fig_outlier_sensitivity.png}
+    \caption{Outlier-contamination sensitivity of the revised method. The robust loss limits, but does not eliminate, degradation as contamination increases.}
+    \label{fig:outlier_sensitivity}
+\end{figure}
+
+\subsection{Learned Association Graph on RKI Data}
+\label{subsec:rki_graph_results}
+
+Because no true inter-state transmission network is available for the RKI dataset, the learned matrix is evaluated as an association/propagation graph rather than a ground-truth transmission graph. Across the 20 corruption seeds, the mean pairwise edge-weight correlation was $0.298$, the support Jaccard similarity was $0.388$, and the edge-weight coefficient of variation was $2.15$. These values indicate only moderate-to-low structural stability. The empirical 95\% state intervals across corruption seeds covered 80.8\% of test values, below their nominal level. These intervals represent variability caused by corruption realizations and must not be interpreted as formal Bayesian credible intervals.
+
+Figures~\ref{fig:graph_heatmap} and \ref{fig:learned_network} visualize the median learned graph. The geographic adjacency enters the model only as a soft reference, so non-geographic edges are not prohibited. The resulting arrows indicate directions preferred by the fitted model, but the limited seed stability and absence of transmission ground truth prevent causal interpretation. The most defensible use of this graph is therefore exploratory: identifying recurring regional associations for follow-up data-quality or epidemiological investigation.
+
+\begin{figure}[!htbp]
+    \centering
+    \includegraphics[width=0.64\linewidth]{figures/fig_graph_heatmap.png}
+    \caption{Median learned directed association weights across RKI corruption seeds. Geographic adjacency is used as a soft reference and is not a ground-truth transmission network.}
+    \label{fig:graph_heatmap}
+\end{figure}
+
+\begin{figure}[!htbp]
+    \centering
+    \includegraphics[width=0.70\linewidth]{figures/fig_learned_network.png}
+    \caption{Median learned association/propagation graph. Arrow direction reflects the fitted asymmetric model but must not be interpreted as an established transmission route.}
+    \label{fig:learned_network}
+\end{figure}
+
+\subsection{Directed Graph Recovery on Separate Synthetic Data}
+\label{subsec:synthetic_graph_results}
+
+A separate synthetic experiment was used to evaluate directed graph recovery because only synthetic data provide a known $W^{\star}$. The true support was never supplied as a candidate mask. Table~\ref{tab:graph_recovery} reports support, ranking, weight, and state-reconstruction metrics for sparse, dense, and time-varying graphs.
+
+\begin{table}[!htbp]
+\centering
+\caption{Directed graph recovery on separate synthetic test instances over 20 seeds.}
+\label{tab:graph_recovery}
+\small
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{lrrrrrrrr}
+\toprule
+True graph & Precision & Recall & F1 & AUROC & AUPRC & Norm. Frobenius & Edge-weight $r$ & State RMSE \\
+\midrule
+Dense & 0.404 & 0.252 & 0.308 & 0.463 & 0.478 & 0.985 & -0.119 & 0.067 \\
+Sparse & 0.263 & 0.304 & 0.280 & 0.513 & 0.298 & 0.986 & 0.044 & 0.069 \\
+Time-varying & 0.290 & 0.332 & 0.307 & 0.536 & 0.298 & 1.048 & 0.058 & 0.070 \\
+\bottomrule
+\end{tabular}}
+\begin{minipage}{0.98\textwidth}\footnotesize The true support was not imposed during fitting. AUROC values near 0.5, normalized Frobenius errors near 1, and edge-weight correlations near zero indicate weak identification of directed edges.\end{minipage}
+\end{table}
+
+State reconstruction remained accurate across all three graph regimes, with mean RMSE between $0.067$ and $0.070$. Directed graph recovery, however, was weak. Support F1 ranged from $0.280$ to $0.308$, AUROC ranged from $0.463$ to $0.536$, normalized Frobenius error ranged from $0.985$ to $1.048$, and edge-weight correlations were close to zero. These findings demonstrate that a model can reconstruct latent states accurately without identifying the true directed edges. The earlier interpretation that strong state recovery implied reliable propagation-network recovery is therefore unsupported and has been removed.
+
+The time-varying case did not materially improve edge identification. Its AUROC of $0.536$ was slightly above chance, but the corresponding F1 ($0.307$), AUPRC ($0.298$), and normalized Frobenius error ($1.048$) remained poor. Edge-selection frequencies should consequently be read as uncertainty summaries rather than evidence of a recovered transmission mechanism.
+
+\begin{figure}[!htbp]
+    \centering
+    \includegraphics[width=0.62\linewidth]{figures/fig_graph_recovery.png}
+    \caption{Directed graph support recovery in the separate synthetic experiments. State estimation remains accurate, whereas edge-support and edge-weight recovery remain weak.}
+    \label{fig:graph_recovery}
+\end{figure}
+
+\subsection{Performance under Model Mismatch}
+\label{subsec:model_mismatch_results}
+
+The mismatch experiments test whether performance depends on generating data from the same linear diffusion structure assumed by the estimator. Table~\ref{tab:model_mismatch} reports selected RMSE values.
+
+\begin{table}[!htbp]
+\centering
+\caption{Selected model-mismatch results over 20 paired seeds. Lower RMSE is better.}
+\label{tab:model_mismatch}
+\small
+\begin{tabular}{lrrrl}
+\toprule
+Mismatch scenario & Proposed & No delay & Delay-aware SSM & Lowest-RMSE method \\
+\midrule
+Abrupt intervention & \textbf{0.050} & 0.051 & 0.067 & Proposed revised \\
+Nonstationary delays & \textbf{0.079} & 0.084 & 0.085 & Proposed revised \\
+Nonlinear dynamics & 0.105 & 0.101 & \textbf{0.074} & Delay-aware SSM \\
+Observation-model mismatch & \textbf{0.065} & 0.067 & 0.069 & Proposed revised \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The revised method was competitive under abrupt interventions and observation-model mismatch and achieved the lowest mean RMSE under nonstationary delays. The nonstationary-delay result is consistent with the intended role of tempered delay responsibilities and temporal consistency. In contrast, under nonlinear epidemic dynamics, the simplified delay-aware state-space model achieved RMSE $0.074$, compared with $0.105$ for the revised method. This is an important limitation: correcting the delay model and graph regularization does not protect the estimator against substantial misspecification of the latent epidemic dynamics.
+
+\begin{figure}[!htbp]
+    \centering
+    \includegraphics[width=0.80\linewidth]{figures/fig_model_mismatch.png}
+    \caption{Selected model-mismatch results. The revised method is effective under nonstationary delays but is not uniformly best, particularly when the latent epidemic dynamics are nonlinear.}
+    \label{fig:model_mismatch}
+\end{figure}
+
+\subsection{Convergence, Runtime, and Scalability}
+\label{subsec:scalability_results}
+
+The normalized objective was non-increasing for all selected validation runs. Figure~\ref{fig:convergence} shows a stable decrease across corruption seeds, supporting the numerical consistency of the staged alternating procedure. This observation establishes empirical descent for the implemented runs; it does not by itself establish global optimality of the nonconvex joint problem.
+
+\begin{figure}[!htbp]
+    \centering
+    \includegraphics[width=0.62\linewidth]{figures/fig_convergence.png}
+    \caption{Mean normalized objective with a one-SD band across 20 RKI corruption seeds. Normalization permits comparison across runs with different numbers of received records.}
+    \label{fig:convergence}
+\end{figure}
+
+\begin{table}[!htbp]
+\centering
+\caption{One-factor-at-a-time scalability, runtime, and memory analysis.}
+\label{tab:scalability}
+\small
+\begin{tabular}{lrrrr}
+\toprule
+Factor & Level & Median runtime (s) & Mean peak RSS (MB) & Mean RMSE \\
+\midrule
+True density & 0.1 & 0.622 & 184.6 & 0.058 \\
+True density & 0.3 & 0.620 & 184.7 & 0.057 \\
+True density & 0.5 & 0.618 & 184.1 & 0.055 \\
+Maximum delay $D$ & 2 & 0.623 & 184.6 & 0.055 \\
+Maximum delay $D$ & 6 & 0.630 & 184.6 & 0.058 \\
+Maximum delay $D$ & 10 & 0.624 & 184.0 & 0.053 \\
+Nodes $n$ & 6 & 0.474 & 179.5 & 0.058 \\
+Nodes $n$ & 12 & 0.928 & 181.4 & 0.056 \\
+Nodes $n$ & 24 & 1.838 & 184.5 & 0.052 \\
+Time points $T$ & 80 & 0.558 & 182.7 & 0.071 \\
+Time points $T$ & 160 & 0.622 & 183.7 & 0.058 \\
+Time points $T$ & 320 & 1.228 & 184.0 & 0.061 \\
+\bottomrule
+\end{tabular}
+\begin{minipage}{0.98\textwidth}\footnotesize Peak memory is the absolute resident-set size of the complete Python process. Each row averages three independent seeds, and only the named factor changes.\end{minipage}
+\end{table}
+
+At fixed $T=160$, median runtime increased from $0.474$ s at $n=6$ to $1.838$ s at $n=24$. At fixed $n=8$, it increased from $0.558$ s at $T=80$ to $1.228$ s at $T=320$. Runtime changed little over $D=2$--10 or graph density 0.1--0.5 at the small dimensions examined. Absolute peak RSS remained within approximately 179--185 MB and was dominated by the baseline Python process, so the memory measurements should not be extrapolated to large surveillance networks. Moreover, the causal rolling implementation required approximately 132 s per seed because it repeatedly refitted the model. The experiments therefore demonstrate feasibility for the evaluated small networks, but not large-scale real-time scalability.
+
+\section{Discussion}
+\label{sec:discussion}
+
+\subsection{Principal Findings}
+\label{subsec:principal_findings}
+
+The revised study produces a more conditional conclusion than the earlier synthetic evaluation. The proposed framework is effective as a robust retrospective reconstruction method: it achieved substantially lower error than several interpolation, matrix-completion, simplified state-space, no-graph, and no-robustness alternatives. The ablation results also show that robust fitting and cross-regional structure are useful when reports are corrupted. However, the no-delay and original proposed ablations were numerically better in the reference retrospective scenario, and their differences from the revised method were not supported after multiplicity correction. The revision therefore does not establish that every added component provides an additive improvement under every corruption regime.
+
+The robustness sweeps clarify where the revised formulation is most useful. It became the lowest-RMSE method at 50\% missingness and under delay-prior mismatch, and it performed best under nonstationary delays in the separate mismatch experiment. These are precisely the settings in which sparse information or an imperfect delay model makes a more flexible posterior treatment valuable. Conversely, the no-delay ablation remained slightly better in many mild-to-moderate stationary corruption scenarios. A plausible explanation is that marginalizing over uncertain delays introduces variance when contemporaneous smoothing already captures most of the useful temporal structure. Delay modeling should therefore be viewed as conditionally beneficial rather than universally necessary.
+
+The robust loss has stronger empirical support. The no-robustness ablation deteriorated sharply as outlier contamination increased, reaching RMSE $1.540$ at 30\% outliers compared with $0.657$ for the revised model. This pattern is consistent with the sensitivity of quadratic loss to large reporting errors. Nevertheless, the robust model also degraded as contamination increased, so robustness should be interpreted as damage limitation rather than immunity to corrupted observations.
+
+\subsection{Retrospective Reconstruction versus Causal Nowcasting}
+\label{subsec:reconstruction_vs_nowcasting}
+
+A central contribution of the revised evaluation is the separation of retrospective reconstruction from causal rolling nowcasting. Retrospective reconstruction can use reports that arrive after their generation dates and is appropriate for historical correction, data auditing, and retrospective burden estimation. Causal nowcasting is more restrictive because the estimator at day $t$ cannot use a report that arrives after day $t$. Mixing these tasks would create an overly favorable impression of real-time performance.
+
+The difference between the two evaluations is substantial. The revised method produced a competitive retrospective RMSE of $0.320$ but a causal RMSE of $1.086$ and MAE of $1.066$. Its high causal correlation indicates that it followed temporal direction, while the large absolute error reveals magnitude bias near the reporting boundary. The simpler Kalman/RTS smoother had a lower mean RMSE and required only a small fraction of the runtime. The current method is consequently better positioned as a retrospective audit and stress-testing layer than as a primary operational nowcasting engine.
+
+This distinction also changes the interpretation of delayed reports. Delayed information can improve reconstruction of past states after it eventually arrives, but that same information is unavailable for a causal decision at the time the state must be estimated. A method that performs well retrospectively is therefore not automatically suitable for outbreak alerts, current resource allocation, or same-day intervention decisions.
+
+\subsection{Interpretation and Identifiability of the Learned Graph}
+\label{subsec:graph_discussion}
+
+The graph results impose an important boundary on the contribution. On RKI data, the graph cannot be compared with a true transmission network, and its stability across corruption seeds was limited. In the separate synthetic experiments, support F1 remained near $0.30$, AUROC remained near chance, normalized Frobenius error remained near one, and edge-weight correlation remained near zero. These results directly contradict the earlier assumption that low state error implies accurate directed graph recovery.
+
+The likely source is structural non-identifiability. Regional epidemic trajectories are smooth, strongly correlated, and generated by a single historical realization. Multiple asymmetric weight matrices can therefore induce similar one-step predictions, particularly under missingness, delays, regularization, and limited excitation. The soft geographic prior reduces implausible solutions without forcing the true support, but it cannot create information that is absent from the observed trajectories. Accordingly, $W$ should be described as a learned association/propagation graph whose stable edges may motivate further investigation, not as a recovered causal transmission network.
+
+This negative result is scientifically useful. It distinguishes the identifiable part of the framework---latent-state reconstruction---from the weakly identified part---directed edge recovery. Future graph claims should require richer excitation, multiple epidemic episodes, mobility or contact covariates, intervention variation, stronger structural assumptions, or externally validated directed edges.
+
+\subsection{Implications for Healthcare and Public-Health Analytics}
+\label{subsec:healthcare_implications}
+
+The results support a limited but practical healthcare-analytics use case. Public-health analysts may use the reconstructed trajectories to compare raw arrival-aligned reports with a robust historical estimate, identify regions whose inferred burden changes materially after delayed reports are incorporated, and flag intervals that require manual data-quality review. Seed-based uncertainty summaries can also show whether a conclusion is stable to plausible patterns of missingness, delay, and contamination.
+
+The framework may additionally serve as a stress-testing tool. Before relying on an operational surveillance pipeline, analysts can inject controlled reporting failures and examine whether regional risk rankings or historical conclusions remain stable. The learned graph can support exploratory association analysis, provided that arrows are not interpreted as causal transmission routes and unstable edges are not used for automated intervention decisions.
+
+The evidence does not support direct clinical use, autonomous allocation decisions, or claims specific to measured 6G network performance. The transport model is compatible with future sliced communication systems, but the experiments use simulated impairment processes rather than 6G telemetry. The broader and better-supported framing is therefore robust epidemic surveillance under delayed, missing, and corrupted reporting, with 6G-enabled healthcare as one possible future application context.
+
+\section{Limitations and Future Work}
+\label{sec:limitations_future}
+
+Several limitations remain. First, the RKI trajectories are real, but the missingness, delays, and outliers are injected. The study therefore evaluates controlled semi-real communication corruption and does not estimate the actual delay process of the RKI reporting system. Future work should use message-level surveillance data with observed generation and arrival timestamps when such data can be accessed under appropriate governance.
+
+Second, the empirical analysis covers six German states over one one-year period. This scale is sufficient for reproducible method evaluation but does not represent the heterogeneity of national or international surveillance networks. Evaluation across more regions, pathogens, epidemic waves, and reporting systems is required before broader generalization.
+
+Third, the delay model assumes a bounded support and relies on a nominal prior selected or estimated outside the locked test interval. The prior-mismatch and nonstationary-delay experiments provide partial stress tests, but online estimation of changing delay distributions remains unresolved. A promising extension is a hierarchical or state-space delay model informed by observed transport metadata, with calibration assessed prospectively.
+
+Fourth, the latent dynamics remain predominantly linear and diffusion-like. The nonlinear mismatch experiment showed that a simpler delay-aware state-space model could outperform the proposed method. Future work should examine nonlinear epidemic transitions, intervention covariates, seasonal effects, multiple pathogens, and regime-switching dynamics while controlling the resulting identifiability and optimization burden.
+
+Fifth, causal current-day estimation exhibited substantial level bias and high rolling runtime. Calibration layers, boundary-aware objectives, sequential rather than repeated batch updates, and direct optimization for causal nowcasting error are needed before the framework can be considered for near-real-time operation.
+
+Sixth, directed graph identifiability is weak. Neither geographic agreement nor accurate state reconstruction proves recovery of transmission direction. Future experiments should incorporate multiple independent cascades, richer exogenous inputs, mobility or contact measurements, prospective edge validation, and uncertainty-aware graph selection. Until then, graph outputs should remain exploratory.
+
+Seventh, the reported state and edge uncertainty summaries are empirical intervals across corruption seeds rather than posterior or frequentist confidence intervals derived from a fully specified inferential model. Developing calibrated state intervals and graph-selection probabilities is an important methodological extension.
+
+Eighth, several external comparators are simplified internal implementations intended to represent broad method families. They should not be interpreted as exact reproductions of every feature, prior, or optimization strategy in the corresponding published systems. A future benchmark should incorporate maintained reference implementations where licensing, interfaces, and data assumptions permit fair use.
+
+Ninth, the scalability experiments cover relatively small values of $n$, $T$, and $D$, and the measured RSS is dominated by process overhead. The study does not establish national-scale, real-time, or edge-device feasibility. Sparse linear algebra, incremental graph updates, parallel delay evaluation, and memory profiling at larger scales are required.
+
+Finally, the work does not establish clinical effectiveness, causal validity, operational safety, or real-world deployment readiness. Any prospective use would require governance, privacy review, monitoring for distribution shift, human oversight, and evaluation of whether reconstructed information improves actual public-health decisions.
+
+\section{Conclusion}
+\label{sec:conclusion}
+
+This study developed and evaluated a revised robust graph-based framework for epidemic surveillance under missing, delayed, and corrupted reporting. The revision introduced real RKI epidemic trajectories with controlled semi-real communication corruption, incidence-based preprocessing, delay-backprojection initialization, tempered and temporally consistent delay responsibilities, corrected regularization for directed graphs, a soft geographic prior, staged optimization, locked train--validation--test selection, stronger baselines, paired statistical testing, causal nowcasting, model-mismatch experiments, and separate synthetic graph-recovery evaluation.
+
+The empirical findings are mixed but informative. The revised framework provides competitive retrospective reconstruction and clearly improves over no-robustness and no-graph variants, with particular value under severe missingness, delay-prior mismatch, and nonstationary delays. It is not uniformly superior to the no-delay or original variants in the reference semi-real scenario. In causal rolling nowcasting, the method tracks temporal shape but exhibits substantial magnitude bias and high runtime, while a simplified Kalman/RTS smoother achieves lower mean RMSE. Directed graph recovery is weak even when latent-state reconstruction is accurate, so the learned graph cannot be interpreted as a validated transmission network.
+
+The central conclusion is therefore conditional rather than promotional: robust delay-aware graph reconstruction can support retrospective auditing and stress testing of corrupted epidemic histories, but its benefit depends on the corruption regime. Reliable real-time nowcasting and directed transmission inference require stronger calibration, identifiability, scalability, and prospective validation. These boundaries do not negate the contribution; they define the specific settings in which the method is supported by the available evidence and the work that remains before operational use.

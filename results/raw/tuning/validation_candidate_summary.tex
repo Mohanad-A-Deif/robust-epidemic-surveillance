@@ -1,0 +1,27 @@
+\begin{table}[!htbp]
+\centering
+\caption{Hyperparameter selection using train/validation data only.}
+\label{tab:validation_tuning}
+\resizebox{\linewidth}{!}{%
+\begin{tabular}{lrrrrr}
+\toprule
+candidate & validation_rmse_mean & validation_rmse_sd & validation_mae_mean & runtime_mean & objective_nonincreasing_rate \\
+\midrule
+C06_sigma025 & 0.47504 & 0.17384 & 0.3307 & 2.2041 & 1 \\
+C03_temp125 & 0.47544 & 0.21716 & 0.29278 & 2.0251 & 1 \\
+C14_combined_tempered & 0.47823 & 0.22389 & 0.29081 & 1.8543 & 1 \\
+C11_high_regularization & 0.48112 & 0.22008 & 0.29347 & 1.8639 & 1 \\
+C05_transition008 & 0.48131 & 0.22063 & 0.29566 & 2.3041 & 1 \\
+C08_huber100 & 0.48327 & 0.22637 & 0.29258 & 1.8303 & 1 \\
+C04_transition002 & 0.48338 & 0.2208 & 0.29601 & 1.8487 & 1 \\
+C01_default & 0.48354 & 0.22061 & 0.29592 & 1.8116 & 1 \\
+C10_low_regularization & 0.48531 & 0.22125 & 0.29765 & 1.8478 & 1 \\
+C12_slow_dynamics & 0.48852 & 0.24467 & 0.27841 & 1.7913 & 1 \\
+C13_fast_dynamics & 0.48861 & 0.19693 & 0.32107 & 1.9398 & 1 \\
+C02_temp075 & 0.4951 & 0.2244 & 0.30065 & 1.8557 & 1 \\
+C09_huber200 & 0.49542 & 0.21771 & 0.30492 & 1.8308 & 1 \\
+C07_sigma050 & 0.62335 & 0.31074 & 0.31125 & 1.9479 & 1 \\
+\bottomrule
+\end{tabular}
+}
+\end{table}

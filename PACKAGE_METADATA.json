@@ -1,0 +1,14 @@
+{
+  "package_name": "Robust Epidemic Surveillance under Missing and Delayed Data: Reproducibility Package",
+  "version": "1.0.0",
+  "release_date": "2026-08-03",
+  "manuscript_title": "A Robust Analytics Approach to Graph-Based Epidemic Surveillance Under Missing and Delayed Data",
+  "n_states": 6,
+  "n_days": 365,
+  "n_seeds": 20,
+  "n_scenarios": 14,
+  "n_message_files": 280,
+  "primary_state": "log1p incidence per 100,000 population",
+  "raw_source_doi": "10.5281/zenodo.10888033",
+  "raw_source_md5": "e59953809e7a8050bb40045c6172ee30"
+}

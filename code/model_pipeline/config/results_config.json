@@ -1,0 +1,38 @@
+{
+  "figure_format": "PNG only",
+  "figure_dpi": 600,
+  "style": "Nature/IEEE grayscale",
+  "primary_real_data_scale": "x_log1p",
+  "evaluation_splits": ["all", "test"],
+  "state_metrics": [
+    "MSE", "RMSE", "MAE", "Median absolute error", "Maximum absolute error",
+    "NRMSE by range", "NRMSE by standard deviation", "NMAE by mean",
+    "MAPE", "sMAPE", "R2", "Pearson correlation", "Spearman correlation", "Bias"
+  ],
+  "graph_metrics_when_truth_exists": [
+    "Frobenius error", "Normalized Frobenius error", "Support precision", "Support recall",
+    "Support F1", "AUROC", "AUPRC", "Structural Hamming distance",
+    "Edge-weight correlation", "Density error"
+  ],
+  "real_data_graph_outputs": [
+    "Agreement with geographic reference support", "Graph stability across seeds",
+    "Edge weight coefficient of variation", "Learned graph density", "Maximum row sum"
+  ],
+  "delay_metrics": [
+    "Delay MAE", "Delay RMSE", "Delay bias", "Exact delay accuracy",
+    "Within-one-day accuracy", "Posterior mass on true delay", "Posterior entropy"
+  ],
+  "statistical_analysis": [
+    "Paired t-test", "Wilcoxon signed-rank", "Cohen dz", "Rank-biserial effect size",
+    "Holm correction", "Bootstrap 95% confidence intervals", "Friedman test", "Average ranks"
+  ],
+  "eda_tables": [
+    "Dataset overview", "Per-node descriptive statistics", "Split statistics",
+    "Trend and stationarity", "Autocorrelation", "Pearson and Spearman correlation",
+    "Peak cross-correlation lag", "Reference graph descriptors", "Scenario integrity"
+  ],
+  "robustness_families": [
+    "Missingness", "Delay severity", "Outlier contamination", "Delay-prior misspecification",
+    "Model mismatch", "Sensitivity", "Scalability"
+  ]
+}

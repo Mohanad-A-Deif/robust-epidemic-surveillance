@@ -1,0 +1,18 @@
+{
+  "title": "StopptCOVID Study Data, Analysis and Results",
+  "publisher": "Robert Koch Institute (RKI)",
+  "repository": "robert-koch-institut/StopptCOVID-Studie_Daten_Analyse_und_Ergebnisse",
+  "doi": "10.5281/zenodo.10888033",
+  "version_date": "2024-03-28",
+  "source_file": "IfSG_COVID-19_Erkrankungsbeginn_Erwartungswert.csv",
+  "download_url": "https://zenodo.org/records/10888033/files/IfSG_COVID-19_Erkrankungsbeginn_Erwartungswert.csv?download=1",
+  "expected_md5": "e59953809e7a8050bb40045c6172ee30",
+  "license": "Creative Commons Attribution 4.0 International",
+  "required_attribution": "Robert Koch Institute (RKI), StopptCOVID Study Data, Analysis and Results, DOI 10.5281/zenodo.10888033.",
+  "raw_columns": ["Bundesland", "Datum", "Altersgrupppe", "EW_Fallzahl"],
+  "notes": [
+    "The source estimates COVID-19 cases by symptom-onset date.",
+    "The source header contains the spelling Altersgrupppe; the preparation script normalizes it to Altersgruppe.",
+    "The package aggregates the three age groups to a state-level daily epidemic trajectory for the primary experiment."
+  ]
+}

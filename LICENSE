@@ -1,0 +1,9 @@
+# Licensing summary
+
+This repository contains materials governed by different licenses:
+
+1. **Software source code** under `code/` and `scripts/` is licensed under the MIT License. See `LICENSES/MIT.txt`.
+2. **The original RKI source data and derived data products** under `data/` are subject to Creative Commons Attribution 4.0 International (CC BY 4.0) and must retain attribution to the Robert Koch Institute dataset. See `LICENSES/RKI_DATA_NOTICE.txt`.
+3. **Repository documentation, tables, and figures** are provided for scholarly reproducibility and may be reused under CC BY 4.0 with attribution to the manuscript authors, unless a file states otherwise.
+
+The repository does not transfer ownership of third-party data or publications.

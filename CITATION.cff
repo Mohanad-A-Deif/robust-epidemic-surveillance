@@ -1,0 +1,32 @@
+cff-version: 1.2.0
+message: "Please cite the manuscript, this reproducibility package, and the underlying RKI dataset."
+title: "Robust Epidemic Surveillance under Missing and Delayed Data: Reproducibility Package"
+type: software
+authors:
+  - given-names: "Mohanad A."
+    family-names: "Deif"
+version: "1.0.0"
+date-released: "2026-08-03"
+license: MIT
+keywords:
+  - epidemic surveillance
+  - reporting delay
+  - missing data
+  - robust reconstruction
+  - graph learning
+  - causal nowcasting
+references:
+  - type: article
+    title: "A Robust Analytics Approach to Graph-Based Epidemic Surveillance Under Missing and Delayed Data"
+    authors:
+      - given-names: "Mohanad A."
+        family-names: "Deif"
+  - type: dataset
+    title: "StopptCOVID-Studie - Daten, Analyse und Ergebnisse"
+    authors:
+      - family-names: "Hicketier"
+        given-names: "Andreas"
+      - family-names: "an der Heiden"
+        given-names: "Matthias"
+    year: 2024
+    doi: 10.5281/zenodo.10888033
